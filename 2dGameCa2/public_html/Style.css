@@ -1,0 +1,247 @@
+canvas{
+
+        background: url("Images/Background1.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: block;
+    position: absolute;
+    margin: auto;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    border : 2px solid red;
+    border-radius: 10px;
+    
+}
+            p{
+font-family: 'Press Start 2P', cursive;
+    color: red;
+    font-size: 20px;
+    position: relative;
+    margin: auto;
+
+    display: none;
+    z-index: 1;
+
+    text-align: center;
+
+    top: -50%;
+            }
+            #paused{
+                    max-width: 300px;
+            }
+            #gameOver{
+                    max-width: 300px
+            }
+            #startGame{
+                max-width: 350px;
+            }
+            #warning{
+                top: -85%;
+                    max-width: 300px;
+             font-family: 'Fredericka the Great'; 
+             display:none;
+             z-index: 1;
+
+            }
+
+            #gameDetails
+            {
+                
+                position: relative;
+                width: 300px;
+                height: 350px;
+                background-color: #1AA3A3;
+                margin-left: -20em;
+                margin-top: 11em;
+                border: 2px solid black;
+                border-radius: 25px;
+            }
+#fps{
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 4em;
+	z-index: 1;
+	color: #AEFE57;
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+
+body{
+	background-color: #0B5E56;
+}
+
+#arena{
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 802px;
+	height: 520px;
+}
+
+#game-canvas{
+	border: 1.5px solid blue;
+}
+
+#toast{
+	position: fixed;
+	margin: auto;
+        left: 33%;
+	width: 600px;
+	font-size: 18px;
+        font-family: 'Press Start 2P', cursive; 
+	text-align: center;
+	color: #ff6;
+	text-shadow: 2px 2px 4px rgb(0,0,0);
+
+	display: none;
+	opacity: 0;
+	transition: opacity 0.5s;
+	z-index: 1;
+}
+
+#highScore{
+
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 8em;
+	z-index: 1;
+	color: #AEFE57;
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+
+#score{
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 12em;
+	z-index: 1;
+	color: #AEFE57;
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+#health{
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 16em;
+	z-index: 1;
+	color: #AEFE57;
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+#round{
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 20em;
+	z-index: 1;
+	color: #AEFE57;
+
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+#gameTimeElapsed{
+	position: absolute;
+        margin-left: 2em;
+        margin-top: 24em;
+	z-index: 1;
+	color: #AEFE57;
+	font-family: 'Press Start 2P', cursive; 
+        text-shadow: 2px 2px 4px rgb(0,0,0);
+        font-size: 12px;
+	display: none;
+	opacity: 0;
+	transition: opacity 5s;
+}
+
+.keys{
+	color: #86BECB;
+
+	border-radius: 5px;
+	margin-left: 10px;
+	padding-right: 5px;
+	padding-bottom:5px;
+	display: inline;
+}
+
+#instructions{
+position: relative;
+    margin-top: -8em;
+    margin-left: 225px;
+    padding-left: 5px;
+    /* padding-top: 10px; */
+    height: 2em;
+    color: #ff0;
+    font-size: 0.95em;
+    top: 100px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
+}
+
+.explanation{
+	color: #ff0;
+	text-shadow: 1px 1px 1px rgba(0,0,200, 0.5);
+	display: inline;
+	margin-top: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+	padding-bottom: 2px;
+}
+
+#copyright{
+    float: right;
+    left: -2px;
+
+    margin-top: 5em;
+    padding: 2px;
+    color: #86BECB;
+    font-size: 0.85em;
+    display: none;
+    opacity: 0;
+    padding-right: 15px;
+    transition: opacity 5s;
+}
+
+#sound-and-music{
+    position: relative;
+
+    margin-top: 10em;
+    color: #ff0;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
+}
+
+.checkbox-div{
+	display: inline;
+	text-shadow: 1px 1px 1px blue;
+}
+
+#sound-checkbox-div{
+	margin-right: 10px;
+}
