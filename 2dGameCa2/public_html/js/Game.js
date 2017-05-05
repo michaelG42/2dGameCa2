@@ -16,7 +16,9 @@ var instructionElement = document.getElementById('instructions');
 var copyrightElement = document.getElementById('copyright');
 var toastElement = document.getElementById('toast');
 
-var LOWEST_FPS = 30;
+var LOWEST_FPS = 60;
+var FPS_WARNING_ON_TIME = 5;//seconds
+var FPS_WARNING_OFF_TIME = 15;
 
 var MIN_COLISION_RANGE = 30;
 var MAX_ENEMY_SHOOT_FREQUENCY = 50;
@@ -26,6 +28,7 @@ var NUM_ENEMYS = 5;
 var SHORT_DELAY = 50;
 var OPAQUE = 1.0;
 var TRANSPARENT = 0;
+
 
 
 
@@ -41,7 +44,7 @@ function main()
     gameTimer = new Stopwatch();//timer for game
     roundTimer = new Stopwatch();//timer for rounds
     exTimer = new Stopwatch();//timer for ship explosion animation
-
+    warningTimer = new Stopwatch();//timer for fps warning
     var img = new Image();// spritesheet image
     img.addEventListener("load", function ()
     {
@@ -194,12 +197,35 @@ function raiseDifficulty()
 function checkLowFps()
 {
 //pauses game and displays warning if frame rate gets to low   
-    if (fps < LOWEST_FPS && !fpsWarningDisplayed && gameTimer.getElapsedTime() > 1000)
+
+
+    if (fps < LOWEST_FPS)
     {
-        document.getElementById('warning').style.display = 'block';
-        document.getElementById("fps").innerHTML = "frame rate : " + Math.round(fps) + " fps ";
-        fpsWarningDisplayed = true;
-        togglePause();
+        
+
+        if(!fpsWarningDisplayed)
+        {
+            document.getElementById('warning').style.display = 'block';
+            warningTimer.start();
+            fpsWarningDisplayed = true;
+        }
+        else 
+        {
+            if((warningTimer.getElapsedTime()/1000) > FPS_WARNING_ON_TIME && (warningTimer.getElapsedTime()/1000) < FPS_WARNING_OFF_TIME)
+            {
+              document.getElementById('warning').style.display = 'none';  
+
+            }
+            if((warningTimer.getElapsedTime()/1000) > FPS_WARNING_OFF_TIME)
+            {
+
+              document.getElementById('warning').style.display = 'block';  
+              warningTimer.stop();
+              fpsWarningDisplayed = false;
+            }
+            
+        }
+          
     }
 }
 function update()
