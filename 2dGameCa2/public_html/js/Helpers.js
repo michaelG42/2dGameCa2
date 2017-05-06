@@ -121,9 +121,9 @@ function Bullet(x, y, vel, w, h, color)// create bullet
 }
 ;
 
-Bullet.prototype.update = function ()// update bullet position 
+Bullet.prototype.update = function (vel)// update bullet position 
 {
-    this.x -= this.vel;
+    this.x -= vel;
 };
 
 

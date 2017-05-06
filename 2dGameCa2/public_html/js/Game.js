@@ -29,6 +29,8 @@ var SHORT_DELAY = 50;
 var OPAQUE = 1.0;
 var TRANSPARENT = 0;
 
+var ENEMY_MOVE_SPEED = 20;
+var BULLET_MOVE_SPEED =8;
 
 
 
@@ -45,6 +47,7 @@ function main()
     roundTimer = new Stopwatch();//timer for rounds
     exTimer = new Stopwatch();//timer for ship explosion animation
     warningTimer = new Stopwatch();//timer for fps warning
+    
     var img = new Image();// spritesheet image
     img.addEventListener("load", function ()
     {
@@ -81,7 +84,7 @@ function init()
     round = 1;
     score = 0;
     health = 100;
-    dir = 1;
+
 
     time = 20;
     gameTimeElapsed = 0;
@@ -228,6 +231,7 @@ function checkLowFps()
           
     }
 }
+
 function update()
 {
     getFps();
@@ -255,12 +259,13 @@ function update()
         if (frames % lvFrame === 0)
         {
             spFrame = (spFrame + 1) % 2;//enemy sprite cycle between frames
+            }
             for (var i = 0; i < enemys.length; i++)
             {
                 var a = enemys[i];
-                a.x -= 30 * dir;
+                a.x -= calcPps(ENEMY_MOVE_SPEED);
             }
-        }
+        
         if (health <= 0)
         {
             shipExplode();
@@ -336,7 +341,7 @@ function shoot()
         {
             var b = bullets[i];
 
-            b.update();//updates bullet pos
+            b.update(calcPps(-BULLET_MOVE_SPEED));//updates bullet pos
 
             if ( b.x > (screen.width - 100))//if the bullet is 100px from top of screen remove it
             {
@@ -415,7 +420,7 @@ function enemyShoot()
     for (var i = 0, len = eBullets.length; i < len; i++)
     {
         var b = eBullets[i];
-        b.update();
+        b.update(calcPps(BULLET_MOVE_SPEED));
 
         if (b.x < 0 || b.x >screen.width+100 )
         {
@@ -467,6 +472,13 @@ function getFps()//gets fps by comparing with last called time
 
 }
 ;
+
+
+function calcPps(speed)
+{
+   
+    return fps/speed;
+}
 
 window.addEventListener('keydown', function (e) {
     var key = e.keyCode;
