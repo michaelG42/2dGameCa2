@@ -705,7 +705,7 @@ function resume()
     revealToast("Welcome Back", 3000);
     var wasPaused = paused;
     paused = false;
-    time += Date.now() - pauseTime;
+    time += Date.now();
     if (wasPaused)
     {
         timeLastFrame = Date.now();
@@ -730,8 +730,7 @@ function revealGame()
     else
     {
         instructionElement = document.getElementById('mobile-instructions');
-        fadeInElements(showHowLink);
-        fadeInElements(welcomeStartLink);
+        revealMobileStartToast();
 
     }
     
@@ -745,54 +744,58 @@ function drawMobileInstructions(){
         ch = screen.height,
         TOP_LINE_OFFSET = 115,
         LINE_HEIGHT = 40;
-   screen.context.save();
+
    initializeContextForMobileInstructions();
    drawMobileDivider(cw, ch);
    drawMobileInstructionsLeft(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
    drawMobileInstructionsRight(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
-   screen.context.restore();
+//   screen.ctx.restore();
 };
 
 function initializeContextForMobileInstructions() 
 {               
-screen.context.textAlign = 'center';      
-screen.context.textBaseline = 'middle';      
-screen.context.font = '26px fantasy';      
-screen.context.shadowBlur = 2;      
-screen.context.shadowOffsetX = 2;      
-screen.context.shadowOffsetY = 2;      
-screen.context.shadowColor = 'rgb(0,0,0)';      
-screen.context.fillStyle = 'yellow';      
-screen.context.strokeStyle = 'yellow';   
+screen.ctx.textAlign = 'center';      
+screen.ctx.textBaseline = 'middle';      
+screen.ctx.font = '26px fantasy';      
+screen.ctx.shadowBlur = 2;      
+screen.ctx.shadowOffsetX = 2;      
+screen.ctx.shadowOffsetY = 2;      
+screen.ctx.shadowColor = 'rgb(0,0,0)';      
+screen.ctx.fillStyle = 'yellow';      
+screen.ctx.strokeStyle = 'yellow';   
 };
 
 function drawMobileDivider(cw, ch) {      
-screen.context.beginPath();      
-screen.context.moveTo(cw/2, 0);      
-screen.context.lineTo(cw/2, ch);      
-screen.context.stroke();   
+screen.ctx.beginPath();
+  
+screen.ctx.moveTo(cw/2, 0);      
+screen.ctx.lineTo(cw/2, ch);  
+screen.ctx.moveTo(0, ch/2);
+screen.ctx.lineTo(cw/2, ch/2); 
+screen.ctx.stroke();   
 };
 
 function drawMobileInstructionsLeft(cw, ch,topLineOffset, lineHeight) 
 {      
-screen.context.font = '32px fantasy';      
-screen.context.fillText('Tap on this side to:', cw/4, ch/2 - topLineOffset);      
-screen.context.fillStyle = 'white';      
-screen.context.font = 'italic 26px fantasy';      
-screen.context.fillText('Turn around when running right', cw/4, ch/2 - topLineOffset + 2*lineHeight);      
-screen.context.fillText('Jump when running left',cw/4, ch/2 - topLineOffset + 3*lineHeight);   
+    
+screen.ctx.fillText('Tap here to:', cw/10, ch/2 - topLineOffset);    
+screen.ctx.fillText('Tap here to:', cw/10, ch - topLineOffset);  
+screen.ctx.fillStyle = 'white';      
+screen.ctx.font = 'italic 26px fantasy';      
+screen.ctx.fillText(' ↑ Move Up  ', cw/3.8, ch/2 - topLineOffset);     
+  
+screen.ctx.fillText(' ↓ Move Down',cw/3.8, ch - topLineOffset);   
 };
 
 function drawMobileInstructionsRight(cw, ch, topLineOffset, lineHeight) 
 {      
-screen.context.font = '32px fantasy';      
-screen.context.fillStyle = 'yellow';      
-screen.context.fillText('Tap on this side to:',3*cw/4, ch/2 - topLineOffset);      
-screen.context.fillStyle = 'white';      
-screen.context.font = 'italic 26px fantasy';      
-screen.context.fillText('Turn around when running left', 3*cw/4, ch/2 - topLineOffset + 2*lineHeight);      
-screen.context.fillText('Jump when running right', 3*cw/4, ch/2 - topLineOffset + 3*lineHeight);      
-screen.context.fillText('Start running', 3*cw/4, ch/2 - topLineOffset + 5*lineHeight);   
+  
+screen.ctx.fillStyle = 'yellow';      
+screen.ctx.fillText('Tap on this side to:',3*cw/4, ch/2 - topLineOffset);      
+screen.ctx.fillStyle = 'white';      
+screen.ctx.font = 'italic 26px fantasy';      
+screen.ctx.fillText('Shoot →', 3*cw/4, ch/2 - topLineOffset + 3*lineHeight);      
+
 }
 
 function draw(now){
@@ -913,7 +916,12 @@ function fadeOutElements()
 ;
 
 function revealMobileStartToast(){
-   fadeInElements(mobileStartToast);
+
+   
+   fadeInElements(mobileWelcomeToast);
+   fadeInElements(showHowLink);
+   fadeInElements(welcomeStartLink);
+
    mobileInstructionsVisible = true;
 };
 
@@ -930,7 +938,7 @@ mobileStartLink.addEventListener('click', function(e){
 welcomeStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
 //   playSound(coinSound);
-    alert("STEPH IS A SEXY BITCH!!!!");
+
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
 
    gameStarted = true;
@@ -938,10 +946,10 @@ welcomeStartLink.addEventListener('click', function(e){
 
 showHowLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
-   alert("SHOW INSTRUC");
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
    drawMobileInstructions();
-   revealMobileStartToast();
+   fadeInElements(mobileStartToast);
+   fadeInElements(mobileStartLink);
    mobileInstructionsVisible = true;
 });
 

@@ -15,14 +15,25 @@ canvas{
     border-radius: 10px;
     
 }
+#mobile-start-link
+{
 
+    background: forestgreen;
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid black;
+    left: -15px;
+    top: 13px;
+}
 .mobile-toast{
    position: absolute;
    border-radius: 10px;
    font: 30px fantasy;
    text-align: center;
-   text-shadow: 1px 1px 1px rgb(0,0,0);
-   color: yellow;
+    text-shadow: 3px 3px 3px rgb(0,0,0);
+    color: #8153df;
    transition: opacity 1s;
    display: none;
    z-index: 1;
@@ -39,13 +50,22 @@ canvas{
 #welcome-start-link{
     position: relative;
     text-align: center;
-    margin-top: 0%;
-    padding-bottom: 10%;
+    margin-top: -28%;
+    padding-bottom: 22%;
     padding-top: 10%;
 }
 #show-how-link{
     position: relative;
     text-align: center;
+
+}
+#mobile-start-toast{
+    position: relative;
+
+    max-width: 40%;
+    left: 46%;
+    top: 33%;
+    
 
 }
 .welcome-link{
@@ -54,7 +74,7 @@ canvas{
    font: 30px fantasy;
    text-align: center;
    text-shadow: 1px 1px 1px rgb(0,0,0);
-   color: yellow;
+   color: #f09c49;
    transition: opacity 1s;
    display: none;
    z-index: 1;
@@ -67,6 +87,7 @@ canvas{
 #mobile-start-toast{
    width: 800px;
    height: 400px;
+
 }
 
 
@@ -81,6 +102,7 @@ canvas{
     z-index: 1;
     border-radius: 10px;
     opacity: 0;
+    display:none;
 }
             p{
     font-family: 'Press Start 2P', cursive;
