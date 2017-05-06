@@ -7,11 +7,12 @@ and John Loane SnailBait game adapted from David Geary author of the book Core h
     <head>
         <title>Wormhole Extreme Game</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=900"/>
+
          <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
          <link rel='stylesheet' href='Style.css'/>
          <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Niconne|Press+Start+2P" rel="stylesheet">
-        <script src = 'Helpers.js'></script>
+
         
 
     </head>
@@ -21,15 +22,15 @@ and John Loane SnailBait game adapted from David Geary author of the book Core h
 <div id = 'arena'>
   
 <!--     mobile devices only -->
-   <div id = 'mobile-welcome-toast' class='mobile-toast'>
+   <div id = 'mobile-welcome-toast' class='mobile-toast'></div>
        <div id='welcome'> Capture coins and jewels. Avoid bees and bats.</div>
          <div id='welcome-instructions'>
-           <p><a href=‘#’ class='welcome-link' id='welcome-start-link'> Start the game
-            </a></p>
-          <p><a href=‘#’ class='welcome-link' id='show-how-link'> Show how to use the controls
-              </a></p></div></div>
-   <div id='mobile-start-toast' class='mobile-toast'>
-      <a href=‘#’ class='welcome-link' id='mobile-start-link'>Start</a></div>
+           <a href='#' class='welcome-link' id='welcome-start-link'> Start the game 
+            </a>
+          <a href='#' class='welcome-link' id='show-how-link'> Show how to use the controls
+              </a></div>
+        <div id='mobile-start-toast' class='mobile-toast'>
+      <a href='#' class='welcome-link' id='mobile-start-link'>Start</a></div>
 
 
             
@@ -77,10 +78,10 @@ p <div class='explanation'>pause</div>
       <div class='explanation'>Run right or jump</div>
    </div>
 </div>
-    
+    <div id ='fadeBlack'></div>
 <!--Copyright..................-->
 <div id='copyright'>&copy; 2017 Michael Grinnell</div>
-<div id ='fadeBlack'></div>
+
 <p id="warning">Warning<br>frame rate is low</p>
 <p id="startGame">Press S to Start</p>
 <p id="paused">Game Paused</p>

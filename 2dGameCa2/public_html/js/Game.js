@@ -19,8 +19,8 @@ var toastElement = document.getElementById('toast');
 var mobileWelcomeToast = document.getElementById('mobile-welcome-toast');
 var welcomeStartLink = document.getElementById('welcome-start-link');
 var showHowLink = document.getElementById('show-how-link');
-var mobileStartToast = document.getElementById('snailbait-mobile-start-toast');
-var instructionsElement = document.getElementById('mobile-instructions');
+var mobileStartToast = document.getElementById('mobile-start-toast');
+var mobileStartLink = document.getElementById('mobile-start-link');;
 
 var LOWEST_FPS = 60;
 var FPS_WARNING_ON_TIME = 5;//seconds
@@ -50,9 +50,10 @@ var TIME_BETWEEN_ROUNDS = 40;//seconds
 var MOBILE = false;
 function main()
 {
+    detectMobile();
     revealGame();//reveals game elements
 
-    screen = new Screen(800, 510);// initalize canvas
+    screen = new Screen(800, 400);// initalize canvas
     input = new InputHandeler();// create input handeler
 
     
@@ -88,7 +89,8 @@ function main()
 
 function init()
 {
-    document.getElementById('startGame').style.display = 'block';//displays start message
+    
+   
     
     highScore = localStorage.getItem("HighScore");//gets high score from local storage
     if (highScore === null)
@@ -96,14 +98,15 @@ function init()
         highScore = 0;
     }
     
-    if(detectMobile())
+    if(MOBILE)
     {
+        
    fitScreen();
    window.addEventListener('resize', fitScreen);
    window.addEventListener('orientationchange', fitScreen);
    addTouchEventHandlers();
-
    
+    
     }
     
     
@@ -206,14 +209,7 @@ function startGame()
    
     document.getElementById('startGame').style.display = 'none'; //hides start message
     
-    if(MOBILE)
-    {
-        fadeInElements(mobileWelcomeToast);
-    }
-    else
-    {
-        revealInitialToast();
-    }
+
     
     paused = false;
     gameStarted = true;
@@ -720,71 +716,87 @@ function revealGame()
 {
     var DIM_CONTROLS_DELAY = 5000;
     
+    if(!MOBILE)
+    {
+    document.getElementById('startGame').style.display = 'block';//displays start message
     revealTopChromeDimmed();
     revealBottomChrome();
-
+    revealInitialToast();
     setTimeout(function () {
         dimControls();
         revealTopChrome();
-    }, DIM_CONTROLS_DELAY);
+    }, DIM_CONTROLS_DELAY); 
+    }
+    else
+    {
+        instructionElement = document.getElementById('mobile-instructions');
+        fadeInElements(showHowLink);
+        fadeInElements(welcomeStartLink);
+
+    }
+    
+
+
 }
 ;
 
 function drawMobileInstructions(){
-   var TOP_LINE_OFFSET = 115,
-          LINE_HEIGHT = 40;
-   context.save();
+    var cw = screen.width,
+        ch = screen.height,
+        TOP_LINE_OFFSET = 115,
+        LINE_HEIGHT = 40;
+   screen.context.save();
    initializeContextForMobileInstructions();
    drawMobileDivider(cw, ch);
    drawMobileInstructionsLeft(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
    drawMobileInstructionsRight(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
-   context.restore();
+   screen.context.restore();
 };
 
 function initializeContextForMobileInstructions() 
 {               
-context.textAlign = 'center';      
-context.textBaseline = 'middle';      
-context.font = '26px fantasy';      
-context.shadowBlur = 2;      
-context.shadowOffsetX = 2;      
-context.shadowOffsetY = 2;      
-context.shadowColor = 'rgb(0,0,0)';      
-context.fillStyle = 'yellow';      
-context.strokeStyle = 'yellow';   
+screen.context.textAlign = 'center';      
+screen.context.textBaseline = 'middle';      
+screen.context.font = '26px fantasy';      
+screen.context.shadowBlur = 2;      
+screen.context.shadowOffsetX = 2;      
+screen.context.shadowOffsetY = 2;      
+screen.context.shadowColor = 'rgb(0,0,0)';      
+screen.context.fillStyle = 'yellow';      
+screen.context.strokeStyle = 'yellow';   
 };
 
 function drawMobileDivider(cw, ch) {      
-context.beginPath();      
-context.moveTo(cw/2, 0);      
-context.lineTo(cw/2, ch);      
-context.stroke();   
+screen.context.beginPath();      
+screen.context.moveTo(cw/2, 0);      
+screen.context.lineTo(cw/2, ch);      
+screen.context.stroke();   
 };
 
-drawMobileInstructionsLeft: function (cw, ch,topLineOffset, lineHeight) 
+function drawMobileInstructionsLeft(cw, ch,topLineOffset, lineHeight) 
 {      
-context.font = '32px fantasy';      
-context.fillText('Tap on this side to:', cw/4, ch/2 - topLineOffset);      
-context.fillStyle = 'white';      
-context.font = 'italic 26px fantasy';      
-context.fillText('Turn around when running right', cw/4, ch/2 - topLineOffset + 2*lineHeight);      
-context.fillText('Jump when running left',cw/4, ch/2 - topLineOffset + 3*lineHeight);   
+screen.context.font = '32px fantasy';      
+screen.context.fillText('Tap on this side to:', cw/4, ch/2 - topLineOffset);      
+screen.context.fillStyle = 'white';      
+screen.context.font = 'italic 26px fantasy';      
+screen.context.fillText('Turn around when running right', cw/4, ch/2 - topLineOffset + 2*lineHeight);      
+screen.context.fillText('Jump when running left',cw/4, ch/2 - topLineOffset + 3*lineHeight);   
 };
 
 function drawMobileInstructionsRight(cw, ch, topLineOffset, lineHeight) 
 {      
-context.font = '32px fantasy';      
-context.fillStyle = 'yellow';      
-context.fillText('Tap on this side to:',3*cw/4, ch/2 - topLineOffset);      
-context.fillStyle = 'white';      
-context.font = 'italic 26px fantasy';      
-context.fillText('Turn around when running left', 3*cw/4, ch/2 - topLineOffset + 2*lineHeight);      
-context.fillText('Jump when running right', 3*cw/4, ch/2 - topLineOffset + 3*lineHeight);      
-context.fillText('Start running', 3*cw/4, ch/2 - topLineOffset + 5*lineHeight);   
+screen.context.font = '32px fantasy';      
+screen.context.fillStyle = 'yellow';      
+screen.context.fillText('Tap on this side to:',3*cw/4, ch/2 - topLineOffset);      
+screen.context.fillStyle = 'white';      
+screen.context.font = 'italic 26px fantasy';      
+screen.context.fillText('Turn around when running left', 3*cw/4, ch/2 - topLineOffset + 2*lineHeight);      
+screen.context.fillText('Jump when running right', 3*cw/4, ch/2 - topLineOffset + 3*lineHeight);      
+screen.context.fillText('Start running', 3*cw/4, ch/2 - topLineOffset + 5*lineHeight);   
 }
 
 function draw(now){
-   if(tmobileInstructionsVisible)
+   if(mobileInstructionsVisible)
    {
       drawMobileInstructions();
    }
@@ -901,7 +913,7 @@ function fadeOutElements()
 ;
 
 function revealMobileStartToast(){
-   sfadeInElements(mobileStartToast);
+   fadeInElements(mobileStartToast);
    mobileInstructionsVisible = true;
 };
 
@@ -910,20 +922,23 @@ mobileStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
    fadeOutElements(mobileStartToast, FADE_DURATION);
    mobileInstructionsVisble = false;
-   playSound(coinSound);
-   playing = true;
+//   playSound(coinSound);
+   gameStarted = true;
 });
 
 
 welcomeStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
-   playSound(coinSound);
+//   playSound(coinSound);
+    alert("STEPH IS A SEXY BITCH!!!!");
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
-   playing = true;
+
+   gameStarted = true;
 });
 
 showHowLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
+   alert("SHOW INSTRUC");
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
    drawMobileInstructions();
    revealMobileStartToast();
@@ -942,11 +957,11 @@ window.addEventListener('blur', function (e)
 
 function addTouchEventHandlers() 
 {      
-canvas.addEventListener( 'touchstart', touchStart);      
-canvas.addEventListener( 'touchend', touchEnd );   
+screen.canvas.addEventListener( 'touchstart', touchStart);      
+screen.canvas.addEventListener( 'touchend', touchEnd );   
 }
 function touchStart(e) {      
-if (playing) {         
+if (gameStarted) {         
 // Prevent players from inadvertently          
 // dragging the game canvas         
 e.preventDefault();       
@@ -954,12 +969,12 @@ e.preventDefault();
 
 function touchEnd(e) {      
     var x = e.changedTouches[0].pageX;      
-    if (playing) {         
-        if (x < canvas.width/2) 
+    if (gameStarted) {         
+        if (x < screen.width/2) 
         {            
             processLeftTap();         
         }         
-         else if (x > canvas.width/2) 
+         else if (x > screen.width/2) 
          {                      	
             processRightTap();         
          }         
@@ -971,25 +986,12 @@ function touchEnd(e) {
 
 function processRightTap()
 {      
-   if (runner.direction === LEFT || bgVelocity === 0)
-   {         
-    turnRight();      
-   }      
-   else 
-   {        
-    jump();      
-   }   
+alert("right");
 };
 
 function processLeftTap() {      
-   if (runner.direction === RIGHT) 
-   {              	
-       turnLeft();      
-   }      
-   else
-   {         
-      jump();      
-   }   
+
+alert("Left");
 }
 
 
