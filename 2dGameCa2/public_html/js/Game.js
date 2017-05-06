@@ -37,6 +37,9 @@ var ROUND_1_BACKGROUND ="url(images/Background1.jpg)";
 var ROUND_2_BACKGROUND ="url(images/Background2.jpg)";
 var ROUND_3_BACKGROUND ="url(images/Background3.jpg)";
 
+var LEVEL_2_ROUND = 1.5;
+var LEVEL_3_ROUND = 10;
+var TIME_BETWEEN_ROUNDS = 40;//seconds
 function main()
 {
     revealGame();//reveals game elements
@@ -50,7 +53,7 @@ function main()
     roundTimer = new Stopwatch();//timer for rounds
     exTimer = new Stopwatch();//timer for ship explosion animation
     warningTimer = new Stopwatch();//timer for fps warning
-     fadeTimer = new Stopwatch();//timer for fading rounds
+
     
     var img = new Image();// spritesheet image
     img.addEventListener("load", function ()
@@ -87,7 +90,7 @@ function init()
 
     round = 1;
     score = 0;
-    health = 100;
+    health = 1000;
 
 
     time = 20;
@@ -187,33 +190,71 @@ function checkEnemyPos()
     }
 }
 ;
+function checkRaiseDifficulty()
+{
+
+
+    if(round === LEVEL_2_ROUND - 0.5)
+    {
+        removeEnemysOffCanvas();
+    }
+    else if(round === LEVEL_2_ROUND)
+    {
+        revealToast("Level 2", 4000);
+        removeEnemysOffCanvas();        
+        fadeIn();
+    }
+    else if(round === LEVEL_3_ROUND -0.5)
+    {
+        removeEnemysOffCanvas();
+    }
+    else if (round === LEVEL_3_ROUND)
+    {
+        revealToast("Level 3", 4000);
+        removeEnemysOffCanvas();       
+        fadeIn();
+    }
+    else
+    {
+        raiseDifficulty();
+    }
+
+}
+
 function raiseDifficulty()
 {
-// raises the difficulty happens every 20 seconds
+    // raises the difficulty 
 // number of enemys increases, movment gets faster, shoot frequency increases.
-    NUM_ENEMYS += 5;
-    if (lvFrame > 10)
-    {
-        lvFrame -= 1;
-    }
+        NUM_ENEMYS += 5;
+
     if (ENEMY_SHOOT_FREQUENCY < MAX_ENEMY_SHOOT_FREQUENCY)
     {
         ENEMY_SHOOT_FREQUENCY += 0.001;
     }
-    
-    if(round > 1)
-    {
-        fadeIn();
-    }
-    
-
+    generateEnemys();
 }
-function changeRound()
+
+
+
+function removeEnemysOffCanvas()
 {
-    fadeTimer.start();
-    fadeRound();
+
+     for (var i = 0; i < enemys.length - 1; i++)
+    {
+
+
+            if (enemys[i].x > screen.width )
+            {
+                enemys.splice(i, 1);
+                i--;
+            }
+        
+
+    }   
 }
 
+//fadeIn and fade out have been modiied from code from here
+//http://stackoverflow.com/questions/6121203/how-to-do-fade-in-and-fade-out-with-javascript-and-css
 function fadeOut() {
     var element = document.getElementById('fadeBlack');
     var op = 1;  // initial opacity
@@ -287,13 +328,13 @@ function update()
     {
 
         roundTimeElapsed = parseInt((roundTimer.getElapsedTime() / 1000) % 60);// gets round time in seconds
-        if (roundTimeElapsed > 20)// new round every 40 seconds difficulty rises every 20 seconds
+        if (roundTimeElapsed > (TIME_BETWEEN_ROUNDS/2))
         {
             roundTimer.reset();
             roundTimer.start();
             round += 0.5;
-            raiseDifficulty();
-            generateEnemys();
+            checkRaiseDifficulty();
+            
         }
 
         gameTimeElapsed = gameTimer.getElapsedTime();
