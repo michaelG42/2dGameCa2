@@ -16,6 +16,12 @@ var instructionElement = document.getElementById('instructions');
 var copyrightElement = document.getElementById('copyright');
 var toastElement = document.getElementById('toast');
 
+var mobileWelcomeToast = document.getElementById('mobile-welcome-toast');
+var welcomeStartLink = document.getElementById('welcome-start-link');
+var showHowLink = document.getElementById('show-how-link');
+var mobileStartToast = document.getElementById('snailbait-mobile-start-toast');
+var instructionsElement = document.getElementById('mobile-instructions');
+
 var LOWEST_FPS = 60;
 var FPS_WARNING_ON_TIME = 5;//seconds
 var FPS_WARNING_OFF_TIME = 15;
@@ -40,6 +46,8 @@ var ROUND_3_BACKGROUND ="url(images/Background3.jpg)";
 var LEVEL_2_ROUND = 1.5;
 var LEVEL_3_ROUND = 10;
 var TIME_BETWEEN_ROUNDS = 40;//seconds
+
+var MOBILE = false;
 function main()
 {
     revealGame();//reveals game elements
@@ -87,6 +95,18 @@ function init()
     {
         highScore = 0;
     }
+    
+    if(detectMobile())
+    {
+   fitScreen();
+   window.addEventListener('resize', fitScreen);
+   window.addEventListener('orientationchange', fitScreen);
+   addTouchEventHandlers();
+
+   
+    }
+    
+    
 
     round = 1;
     score = 0;
@@ -122,12 +142,79 @@ function init()
     generateEnemys();
 }
 ;
+
+ function detectMobile()
+ {
+   MOBILE ='ontouchstart' in window;
+};
+function fitScreen() 
+{
+   var arenaSize = calculateArenaSize(getViewportSize());
+   resizeElementsToFitScreen(arenaSize.width, arenaSize.height);
+}
+
+function getViewportSize(){
+   return{
+      width: Math.max(document.documentElement.clientWidth || window.innerWidth || 0),
+      height: Math.max(document.documentElement.clientHeight || window.innerHeight || 0)
+   };
+}
+
+function calculateArenaSize(viewportSize){
+   var DESKTOP_ARENA_WIDTH = 800,
+       DESKTOP_ARENA_HEIGHT = 520,
+          arenaHeight,
+          arenaWidth;
+  
+  
+   arenaHeight = viewportSize.width*(DESKTOP_ARENA_HEIGHT/DESKTOP_ARENA_WIDTH);
+      if(arenaHeight < viewportSize.height){
+      arenaWidth = viewportSize.width;
+   }
+   else{
+      arenaHeight = viewportSize.height;
+      arenaWidth = arenaHeight *(DESKTOP_ARENA_WIDTH/DESKTOP_ARENA_HEIGHT);
+   }
+      if(arenaWidth > DESKTOP_ARENA_WIDTH){
+      arenaWidth = DESKTOP_ARENA_WIDTH;
+   }
+   if(arenaHeight > DESKTOP_ARENA_HEIGHT){
+      arenaHeight = DESKTOP_ARENA_HEIGHT;
+   }
+   return{
+      width: arenaWidth,
+      height: arenaHeight
+   };
+}
+
+function resizeElementsToFitScreen(arenaWidth, arenaHeight){
+   resizeElement(document.getElementById('arena'), arenaWidth, arenaHeight);
+   resizeElement(mobileWelcomeToast, arenaWidth, arenaHeight);
+   resizeElement(mobileStartToast, arenaWidth, arenaHeight);
+};
+
+function resizeElement(element, w, h){
+   element.style.width = w + "px";
+   element.style.height = h + "px";
+};
+
+
+
 function startGame()
 {
     
    
     document.getElementById('startGame').style.display = 'none'; //hides start message
-    revealInitialToast();
+    
+    if(MOBILE)
+    {
+        fadeInElements(mobileWelcomeToast);
+    }
+    else
+    {
+        revealInitialToast();
+    }
+    
     paused = false;
     gameStarted = true;
     gameTimer.start();
@@ -632,6 +719,7 @@ function resume()
 function revealGame()
 {
     var DIM_CONTROLS_DELAY = 5000;
+    
     revealTopChromeDimmed();
     revealBottomChrome();
 
@@ -641,6 +729,67 @@ function revealGame()
     }, DIM_CONTROLS_DELAY);
 }
 ;
+
+function drawMobileInstructions(){
+   var TOP_LINE_OFFSET = 115,
+          LINE_HEIGHT = 40;
+   context.save();
+   initializeContextForMobileInstructions();
+   drawMobileDivider(cw, ch);
+   drawMobileInstructionsLeft(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
+   drawMobileInstructionsRight(screen.width, screen.height, TOP_LINE_OFFSET, LINE_HEIGHT);
+   context.restore();
+};
+
+function initializeContextForMobileInstructions() 
+{               
+context.textAlign = 'center';      
+context.textBaseline = 'middle';      
+context.font = '26px fantasy';      
+context.shadowBlur = 2;      
+context.shadowOffsetX = 2;      
+context.shadowOffsetY = 2;      
+context.shadowColor = 'rgb(0,0,0)';      
+context.fillStyle = 'yellow';      
+context.strokeStyle = 'yellow';   
+};
+
+function drawMobileDivider(cw, ch) {      
+context.beginPath();      
+context.moveTo(cw/2, 0);      
+context.lineTo(cw/2, ch);      
+context.stroke();   
+};
+
+drawMobileInstructionsLeft: function (cw, ch,topLineOffset, lineHeight) 
+{      
+context.font = '32px fantasy';      
+context.fillText('Tap on this side to:', cw/4, ch/2 - topLineOffset);      
+context.fillStyle = 'white';      
+context.font = 'italic 26px fantasy';      
+context.fillText('Turn around when running right', cw/4, ch/2 - topLineOffset + 2*lineHeight);      
+context.fillText('Jump when running left',cw/4, ch/2 - topLineOffset + 3*lineHeight);   
+};
+
+function drawMobileInstructionsRight(cw, ch, topLineOffset, lineHeight) 
+{      
+context.font = '32px fantasy';      
+context.fillStyle = 'yellow';      
+context.fillText('Tap on this side to:',3*cw/4, ch/2 - topLineOffset);      
+context.fillStyle = 'white';      
+context.font = 'italic 26px fantasy';      
+context.fillText('Turn around when running left', 3*cw/4, ch/2 - topLineOffset + 2*lineHeight);      
+context.fillText('Jump when running right', 3*cw/4, ch/2 - topLineOffset + 3*lineHeight);      
+context.fillText('Start running', 3*cw/4, ch/2 - topLineOffset + 5*lineHeight);   
+}
+
+function draw(now){
+   if(tmobileInstructionsVisible)
+   {
+      drawMobileInstructions();
+   }
+}
+
 
 function revealTopChromeDimmed()
 {
@@ -751,7 +900,35 @@ function fadeOutElements()
 }
 ;
 
+function revealMobileStartToast(){
+   sfadeInElements(mobileStartToast);
+   mobileInstructionsVisible = true;
+};
 
+
+mobileStartLink.addEventListener('click', function(e){
+   var FADE_DURATION = 1000;
+   fadeOutElements(mobileStartToast, FADE_DURATION);
+   mobileInstructionsVisble = false;
+   playSound(coinSound);
+   playing = true;
+});
+
+
+welcomeStartLink.addEventListener('click', function(e){
+   var FADE_DURATION = 1000;
+   playSound(coinSound);
+   fadeOutElements(mobileWelcomeToast, FADE_DURATION);
+   playing = true;
+});
+
+showHowLink.addEventListener('click', function(e){
+   var FADE_DURATION = 1000;
+   fadeOutElements(mobileWelcomeToast, FADE_DURATION);
+   drawMobileInstructions();
+   revealMobileStartToast();
+   mobileInstructionsVisible = true;
+});
 
 window.addEventListener('blur', function (e)
 {
@@ -762,6 +939,60 @@ window.addEventListener('blur', function (e)
         togglePause(); //Pause the game
     }
 });
+
+function addTouchEventHandlers() 
+{      
+canvas.addEventListener( 'touchstart', touchStart);      
+canvas.addEventListener( 'touchend', touchEnd );   
+}
+function touchStart(e) {      
+if (playing) {         
+// Prevent players from inadvertently          
+// dragging the game canvas         
+e.preventDefault();       
+}};
+
+function touchEnd(e) {      
+    var x = e.changedTouches[0].pageX;      
+    if (playing) {         
+        if (x < canvas.width/2) 
+        {            
+            processLeftTap();         
+        }         
+         else if (x > canvas.width/2) 
+         {                      	
+            processRightTap();         
+         }         
+        // Prevent players from double         
+       // tapping to zoom into the canvas         
+        e.preventDefault();       
+}   
+};
+
+function processRightTap()
+{      
+   if (runner.direction === LEFT || bgVelocity === 0)
+   {         
+    turnRight();      
+   }      
+   else 
+   {        
+    jump();      
+   }   
+};
+
+function processLeftTap() {      
+   if (runner.direction === RIGHT) 
+   {              	
+       turnLeft();      
+   }      
+   else
+   {         
+      jump();      
+   }   
+}
+
+
 
 window.addEventListener('focus', function (e)
 {

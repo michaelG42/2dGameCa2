@@ -1,3 +1,4 @@
+
 canvas{
 
     background-image:  url("Images/Background1.jpg");
@@ -14,6 +15,29 @@ canvas{
     border-radius: 10px;
     
 }
+
+.mobile-toast{
+   position: absolute;
+   border-radius: 10px;
+   font: 30px fantasy;
+   text-align: center;
+   text-shadow: 1px 1px 1px rgb(0,0,0);
+   color: yellow;
+   transition: opacity 1s;
+   display: none;
+   z-index: 1;
+   opacity: 0;
+}
+#mobile-welcome-toast{
+   width: 800px;
+   height: 400px;
+}
+#mobile-start-toast{
+   width: 800px;
+   height: 400px;
+}
+
+
 #fadeBlack
 {
     position: relative;
@@ -84,6 +108,7 @@ canvas{
 
 body{
 	background-color: #0B5E56;
+        
 }
 
 #arena{
