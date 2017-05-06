@@ -1,6 +1,6 @@
 canvas{
 
-        background: url("Images/Background1.jpg");
+    background-image:  url("Images/Background1.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: block;
@@ -14,19 +14,29 @@ canvas{
     border-radius: 10px;
     
 }
+#fadeBlack
+{
+    position: relative;
+    background: black;
+    width: 99.8%;
+    left: 0.1%;
+        top: -89.8%;
+    height: 98.2%;
+    z-index: 1;
+    border-radius: 10px;
+    opacity: 0;
+}
             p{
-font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', cursive;
     color: red;
     font-size: 20px;
-    position: relative;
+    position: absolute;
     margin: auto;
-
     display: none;
     z-index: 1;
-
     text-align: center;
-
-    top: -50%;
+    top: 50%;
+    left: 40%;
             }
             #paused{
                     max-width: 300px;

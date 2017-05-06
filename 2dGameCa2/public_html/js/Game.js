@@ -32,7 +32,10 @@ var TRANSPARENT = 0;
 var ENEMY_MOVE_SPEED = 20;
 var BULLET_MOVE_SPEED =8;
 
-
+var SCREEN_FADED = false;
+var ROUND_1_BACKGROUND ="url(images/Background1.jpg)";
+var ROUND_2_BACKGROUND ="url(images/Background2.jpg)";
+var ROUND_3_BACKGROUND ="url(images/Background3.jpg)";
 
 function main()
 {
@@ -41,12 +44,13 @@ function main()
     screen = new Screen(800, 510);// initalize canvas
     input = new InputHandeler();// create input handeler
 
-
+    
 
     gameTimer = new Stopwatch();//timer for game
     roundTimer = new Stopwatch();//timer for rounds
     exTimer = new Stopwatch();//timer for ship explosion animation
     warningTimer = new Stopwatch();//timer for fps warning
+     fadeTimer = new Stopwatch();//timer for fading rounds
     
     var img = new Image();// spritesheet image
     img.addEventListener("load", function ()
@@ -74,7 +78,7 @@ function main()
 function init()
 {
     document.getElementById('startGame').style.display = 'block';//displays start message
-
+    
     highScore = localStorage.getItem("HighScore");//gets high score from local storage
     if (highScore === null)
     {
@@ -111,11 +115,14 @@ function init()
     eBullets = [];// enemy bullets
     enemys = [];
 
+    
     generateEnemys();
 }
 ;
 function startGame()
 {
+    
+   
     document.getElementById('startGame').style.display = 'none'; //hides start message
     revealInitialToast();
     paused = false;
@@ -193,8 +200,48 @@ function raiseDifficulty()
     {
         ENEMY_SHOOT_FREQUENCY += 0.001;
     }
+    
+    if(round > 1)
+    {
+        fadeIn();
+    }
+    
 
+}
+function changeRound()
+{
+    fadeTimer.start();
+    fadeRound();
+}
 
+function fadeOut() {
+    var element = document.getElementById('fadeBlack');
+    var op = 1;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op <= 0){
+            clearInterval(timer);
+            
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -=  0.05;
+    }, 100);
+}
+function fadeIn() {
+    var element = document.getElementById('fadeBlack');
+    var op = 0;  // initial opacity
+    element.style.display = 'block';
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+            changeBackground();
+            fadeOut();
+        }
+        element.style.opacity = op;
+        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op +=  0.05;
+    }, 100);
 }
 
 function checkLowFps()
@@ -331,8 +378,10 @@ function moveShip()
 
 function shoot()
 {
+    
     if (input.isPressed(32))
     {
+        
         bullets.push(new Bullet(ship.x+10, ship.y + 65, -8, 12, 4, "#FFFF00"));
     }
     for (var i = 0, len = bullets.length; i < len; i++)
@@ -706,5 +755,19 @@ window.addEventListener('focus', function (e)
         }, DIGIT_DISPLAY_DURATION);
     }
 });
+
+
+function changeBackground() 
+{
+    if(round > 1 && round < 2)
+    {
+         screen.canvas.style.backgroundImage= ROUND_3_BACKGROUND; 
+    }
+    else
+    {
+        screen.canvas.style.backgroundImage= ROUND_3_BACKGROUND; 
+    }
+  
+}
 
 main();

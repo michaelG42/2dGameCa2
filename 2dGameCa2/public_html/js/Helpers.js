@@ -5,7 +5,7 @@ function Screen(width, height)// creates canvas
     this.canvas.width = this.width = width;
     this.canvas.height = this.height = height;
     this.ctx = this.canvas.getContext("2d");
-
+    
     document.body.appendChild(this.canvas);
 
 }
@@ -13,6 +13,7 @@ function Screen(width, height)// creates canvas
 
 Screen.prototype.clear = function ()//clears screen
 {
+    
     this.ctx.clearRect(0, 0, this.width, this.height);
 };
 Screen.prototype.drawSprite = function (sp, y, x)//draws a sprite
