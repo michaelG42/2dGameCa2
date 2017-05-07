@@ -30,13 +30,14 @@ Screen.prototype.drawBullet = function (bullet)//draws bullet to screen
     this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 };
 
-function Sprite(img, x, y, w, h)//creates sprite
+function Sprite(img, x, y, w, h, name)//creates sprite
 {
     this.img = img;
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
+    this.name = name;
 }
 ;
 

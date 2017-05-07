@@ -1,51 +1,64 @@
 
-var screen, input, frames, spFrame, lvFrame, exFrame, fps;
-var enSprite, shSprite, exSprite;
-var enemys, dir, ship, bullets, eBullets, fpsWarningDisplayed, shipExploding, windowHasFocus, countDownInProgress;
-var gameTimeElapsed, gameTimer, gameTime, roundTimer, exTimer, lastCalledTime, pauseStartTime, timer, time;
-var health, paused, score, gameOver, gameStarted, highScore, explosion;
+var screen, input, frames, spFrame, lvFrame, exFrame, fps,arenaHeight,arenaWidth, viewportWidth, viewpotHeight,
+ enSprite, shSprite, exSprite,
+ enemys, dir, ship, bullets, eBullets, fpsWarningDisplayed, shipExploding, windowHasFocus, countDownInProgress,
+ gameTimeElapsed, gameTimer, gameTime, roundTimer, exTimer, lastCalledTime, pauseStartTime, timer, time,
+ health, paused, score, gameOver, gameStarted, highScore, explosion;
 
-var highScoreElement = document.getElementById('highScore');
-var fpsElement = document.getElementById('fps');
-var scoreElement = document.getElementById('score');
-var healthElement = document.getElementById('health');
-var gameTimeElapsedElement = document.getElementById('gameTimeElapsed');
-var roundElement = document.getElementById('round');
-var soundAndMusicElement = document.getElementById('sound-and-music');
-var instructionElement = document.getElementById('instructions');
-var copyrightElement = document.getElementById('copyright');
-var toastElement = document.getElementById('toast');
+var highScoreElement = document.getElementById('highScore'),
+ fpsElement = document.getElementById('fps'),
+ scoreElement = document.getElementById('score'),
+ healthElement = document.getElementById('health'),
+ gameTimeElapsedElement = document.getElementById('gameTimeElapsed'),
+ roundElement = document.getElementById('round'),
+ soundAndMusicElement = document.getElementById('sound-and-music'),
+ instructionElement = document.getElementById('instructions'),
+ copyrightElement = document.getElementById('copyright'),
+ toastElement = document.getElementById('toast'),
+ gameOverElement = document.getElementById('gameOver');
 
-var mobileWelcomeToast = document.getElementById('mobile-welcome-toast');
-var welcomeStartLink = document.getElementById('welcome-start-link');
-var showHowLink = document.getElementById('show-how-link');
-var mobileStartToast = document.getElementById('mobile-start-toast');
-var mobileStartLink = document.getElementById('mobile-start-link');;
+var mobileWelcomeToast = document.getElementById('mobile-welcome-toast'),
+ welcomeStartLink = document.getElementById('welcome-start-link'),
+ showHowLink = document.getElementById('show-how-link'),
+ mobileStartToast = document.getElementById('mobile-start-toast'),
+ mobileStartLink = document.getElementById('mobile-start-link'),
+ playAgainToast = document.getElementById('play-again-toast'),
+  playAgainLink = document.getElementById('play-again-link');
 
-var LOWEST_FPS = 60;
-var FPS_WARNING_ON_TIME = 5;//seconds
-var FPS_WARNING_OFF_TIME = 15;
+var LOWEST_FPS = 80,
+ FPS_WARNING_ON_TIME = 5,//seconds
+ FPS_WARNING_OFF_TIME = 15;
 
-var MIN_COLISION_RANGE = 30;
-var MAX_ENEMY_SHOOT_FREQUENCY = 50;
-var ENEMY_SHOOT_FREQUENCY = 0.5;
-var NUM_ENEMYS = 5;
+var MIN_COLISION_RANGE = 30,
+ MAX_ENEMY_SHOOT_FREQUENCY = 50,
+ ENEMY_SHOOT_FREQUENCY = 0.5,
+ ENEMY_SHOOT_FREQUENCY_LEVEL = 0.1,
+ NUM_ENEMYS = 10,
+ NUM_ENEMYS_LEVEL = 5;
 
-var SHORT_DELAY = 50;
-var OPAQUE = 1.0;
-var TRANSPARENT = 0;
+var SHORT_DELAY = 50,
+ OPAQUE = 1.0,
+ TRANSPARENT = 0;
 
-var ENEMY_MOVE_SPEED = 20;
-var BULLET_MOVE_SPEED =8;
+var ENEMY_SMALL_MOVE_SPEED = 12,
+ ENEMY_MEDIUM_MOVE_SPEED = 16,
+ ENEMY_LARGE_MOVE_SPEED = 20,
+ BULLET_MOVE_SPEED =8;
 
-var SCREEN_FADED = false;
-var ROUND_1_BACKGROUND ="url(images/Background1.jpg)";
-var ROUND_2_BACKGROUND ="url(images/Background2.jpg)";
-var ROUND_3_BACKGROUND ="url(images/Background3.jpg)";
+var ENEMY_SMALL = 1,
+ ENEMY_MEDIUM = 2,
+ ENEMY_LARGE = 3,
+ EXPOLOSION = 4,
+ PLAYER = 5;
 
-var LEVEL_2_ROUND = 1.5;
-var LEVEL_3_ROUND = 10;
-var TIME_BETWEEN_ROUNDS = 40;//seconds
+var SCREEN_FADED = false,
+ ROUND_1_BACKGROUND ="url(images/Background1.jpg)",
+ ROUND_2_BACKGROUND ="url(images/Background2.jpg)",
+ ROUND_3_BACKGROUND ="url(images/Background3.jpg)";
+
+var LEVEL_2_ROUND = 1.5,
+ LEVEL_3_ROUND = 10,
+ TIME_BETWEEN_ROUNDS = 40;//seconds
 
 var SCREEN_HELD;
 
@@ -57,8 +70,8 @@ function main()
 
     screen = new Screen(800, 400);// initalize canvas
     input = new InputHandeler();// create input handeler
-
     
+
 
     gameTimer = new Stopwatch();//timer for game
     roundTimer = new Stopwatch();//timer for rounds
@@ -70,17 +83,17 @@ function main()
     img.addEventListener("load", function ()
     {
         enSprite = [//enemy sprite array
-            [new Sprite(this, 0, 0, 105, 80), new Sprite(this, 0, 80, 105, 80)],
-            [new Sprite(this, 105, 0, 100, 80), new Sprite(this, 105, 80, 100, 80)],
-            [new Sprite(this, 220, 0, 118, 80), new Sprite(this, 220, 80, 118, 80)]
+            [new Sprite(this, 30, 30, 46, 30,ENEMY_SMALL), new Sprite(this, 30, 106, 46, 26,ENEMY_SMALL)],
+            [new Sprite(this, 125, 23, 61, 33,ENEMY_MEDIUM), new Sprite(this, 125, 106, 61, 29,ENEMY_MEDIUM)],
+            [new Sprite(this, 237, 9, 83, 62,ENEMY_LARGE), new Sprite(this, 235, 88, 85, 57,ENEMY_LARGE)]
         ];
         exSprite = [// ship explosion sprite array
-            new Sprite(this, 0, 160, 80, 160), new Sprite(this, 80, 160, 80, 160),
-            new Sprite(this, 160, 160, 80, 160), new Sprite(this, 240, 160, 80, 160),
-            new Sprite(this, 320, 160, 80, 160), new Sprite(this, 400, 160, 80, 160),
-            new Sprite(this, 400, 160, 80, 160), new Sprite(this, 480, 160, 80, 160)
+            new Sprite(this, 0, 160, 80, 160,EXPOLOSION), new Sprite(this, 80, 160, 80, 160,EXPOLOSION),
+            new Sprite(this, 160, 160, 80, 160,EXPOLOSION), new Sprite(this, 240, 160, 80, 160,EXPOLOSION),
+            new Sprite(this, 320, 160, 80, 160,EXPOLOSION), new Sprite(this, 400, 160, 80, 160,EXPOLOSION),
+            new Sprite(this, 400, 160, 80, 160,EXPOLOSION), new Sprite(this, 480, 160, 80, 160,EXPOLOSION)
         ];
-        shSprite = new Sprite(this, 365, 0, 65, 160);//ship sprite
+        shSprite = new Sprite(this, 357, 53, 67, 35,PLAYER);//ship sprite
 
         init();// initalize game
 
@@ -115,9 +128,7 @@ function init()
 
     round = 1;
     score = 0;
-    health = 1000;
-
-
+    health = 00;
     time = 20;
     gameTimeElapsed = 0;
     pauseStartTime = 0;
@@ -157,20 +168,22 @@ function fitScreen()
 {
    var arenaSize = calculateArenaSize(getViewportSize());
    resizeElementsToFitScreen(arenaSize.width, arenaSize.height);
+   alterFadeMobile();
 }
 
 function getViewportSize(){
+    
+    viewportWidth = Math.max(document.documentElement.clientWidth || window.innerWidth || 0);
+    viewpotHeight = Math.max(document.documentElement.clientHeight || window.innerHeight || 0);
    return{
-      width: Math.max(document.documentElement.clientWidth || window.innerWidth || 0),
-      height: Math.max(document.documentElement.clientHeight || window.innerHeight || 0)
+      width: viewportWidth,
+      height: viewpotHeight
    };
 }
 
 function calculateArenaSize(viewportSize){
    var DESKTOP_ARENA_WIDTH = 800,
-       DESKTOP_ARENA_HEIGHT = 520,
-          arenaHeight,
-          arenaWidth;
+       DESKTOP_ARENA_HEIGHT = 400;
   
   
    arenaHeight = viewportSize.width*(DESKTOP_ARENA_HEIGHT/DESKTOP_ARENA_WIDTH);
@@ -197,6 +210,15 @@ function resizeElementsToFitScreen(arenaWidth, arenaHeight){
    resizeElement(document.getElementById('arena'), arenaWidth, arenaHeight);
    resizeElement(mobileWelcomeToast, arenaWidth, arenaHeight);
    resizeElement(mobileStartToast, arenaWidth, arenaHeight);
+};
+
+function alterFadeMobile()
+{
+    document.getElementById('fadeBlack').style.position = "absolute";
+    document.getElementById('fadeBlack').style.width = "100%";
+    document.getElementById('fadeBlack').style.height = "100%";
+    document.getElementById('fadeBlack').style.top = "0px";
+
 };
 
 function resizeElement(element, w, h){
@@ -240,9 +262,10 @@ function generateEnemys()
             enemys.push({
                 sprite: enSprite[a],
                 x: Math.floor(Math.random() * ((screen.width*10) - screen.width + 1)) + screen.width, // gives the sprite a random x position
-                y: (Math.floor(Math.random() * 150) + 10) + j * (Math.floor(Math.random() * 70) + 180) + [0, 0, 0][a], // gives the sprite a random y position inside the canvas
+                y: Math.floor(Math.random() * ((screen.height-60) - 15 + 1)) + 15, // gives the sprite a random y position inside the canvas
                 w: enSprite[a][0].w,
-                h: enSprite[a][0].h
+                h: enSprite[a][0].h,
+                name: enSprite[a][0].name
             });
         }
     }
@@ -282,9 +305,9 @@ function checkRaiseDifficulty()
     }
     else if(round === LEVEL_2_ROUND)
     {
-        revealToast("Level 2", 4000);
+        setTimeout(function(){ revealToast("Level 2", 6000); }, 4000);
         removeEnemysOffCanvas();        
-        fadeIn();
+        setTimeout(function(){ fadeIn(); }, 8000);
     }
     else if(round === LEVEL_3_ROUND -0.5)
     {
@@ -292,9 +315,10 @@ function checkRaiseDifficulty()
     }
     else if (round === LEVEL_3_ROUND)
     {
-        revealToast("Level 3", 4000);
+        setTimeout(function(){ revealToast("Level 3", 6000); }, 4000);
+        
         removeEnemysOffCanvas();       
-        fadeIn();
+        setTimeout(function(){ fadeIn(); }, 8000);
     }
     else
     {
@@ -307,11 +331,11 @@ function raiseDifficulty()
 {
     // raises the difficulty 
 // number of enemys increases, movment gets faster, shoot frequency increases.
-        NUM_ENEMYS += 5;
+        NUM_ENEMYS += NUM_ENEMYS_LEVEL;
 
     if (ENEMY_SHOOT_FREQUENCY < MAX_ENEMY_SHOOT_FREQUENCY)
     {
-        ENEMY_SHOOT_FREQUENCY += 0.001;
+        ENEMY_SHOOT_FREQUENCY += ENEMY_SHOOT_FREQUENCY_LEVEL;
     }
     generateEnemys();
 }
@@ -344,7 +368,7 @@ function fadeOut() {
     var timer = setInterval(function () {
         if (op <= 0){
             clearInterval(timer);
-            
+            element.style.display = 'none';
         }
         element.style.opacity = op;
         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
@@ -433,7 +457,20 @@ function update()
             for (var i = 0; i < enemys.length; i++)
             {
                 var a = enemys[i];
-                a.x -= calcPps(ENEMY_MOVE_SPEED);
+
+                if(a.name === ENEMY_SMALL)
+                {
+                    a.x -= calcPps(ENEMY_SMALL_MOVE_SPEED);
+                }
+                else if(a.name === ENEMY_MEDIUM)
+                {
+                    a.x -= calcPps(ENEMY_MEDIUM_MOVE_SPEED);
+                }
+                else if(a.name === ENEMY_LARGE)
+                {
+                    a.x -= calcPps(ENEMY_LARGE_MOVE_SPEED);
+                }
+                
             }
         
         if (health <= 0)
@@ -450,17 +487,19 @@ function render()//renders everything to screen
     screen.clear();//removes everything from previous frame
     if (frames % lvFrame === 0 && !gameOver)
     {
-        document.getElementById("fps").innerHTML = "frame rate : " + Math.round(fps) + " fps ";
+    fpsElement.innerHTML = "frame rate : " + Math.round(fps) + " fps ";
     }
 
     var seconds = parseInt((gameTimeElapsed / 1000) % 60);
     var min = parseInt((gameTimeElapsed / (1000 * 60)) % 60);
+    
 
-    document.getElementById("highScore").innerHTML = "High Score: " + highScore;
-    document.getElementById("score").innerHTML = "Score: " + score;
-    document.getElementById("health").innerHTML = "health: " + health;
-    document.getElementById("round").innerHTML = "Round: " + Math.floor(round);
-    document.getElementById("gameTimeElapsed").innerHTML = "Time Elapsed: " + min + "." + seconds;
+
+    highScoreElement.innerHTML = "High Score: " + highScore;
+    scoreElement.innerHTML = "Score: " + score;
+    healthElement.innerHTML = "health: " + health;
+    roundElement.innerHTML = "Round: " + Math.floor(round);
+    gameTimeElapsedElement.innerHTML = "Time Elapsed: " + min + "." + seconds;
 
     for (var i = 0; i < enemys.length; i++)//draws enemys
     {
@@ -495,7 +534,7 @@ function moveShip()
         ship.y -= 4;
 
     }
-    ship.y = Math.max(Math.min(ship.y, screen.height - ((shSprite.h/2)+35)), -50);
+    ship.y = Math.max(Math.min(ship.y, screen.height - ((shSprite.h/2)+35)), 0);
 }
 ;
 
@@ -505,7 +544,7 @@ function shoot()
     if (input.isPressed(32) )
     {
         
-        bullets.push(new Bullet(ship.x+10, ship.y + 65, -8, 12, 4, "#FFFF00"));
+        bullets.push(new Bullet(ship.x+ (shSprite.w *.9), ship.y + (shSprite.h/2), -8, 12, 4, "#FFFF00"));
     }
     for (var i = 0, len = bullets.length; i < len; i++)
     {
@@ -547,7 +586,12 @@ function gameLost()
 
     gameOver = true;
     gameStarted = false;
-    document.getElementById('gameOver').style.display = 'block';
+    gameOverElement.style.display = 'block';
+    if(MOBILE)
+    {
+   fadeInElements(playAgainToast);
+   fadeInElements(playAgainLink);
+    }
 
 
 }
@@ -587,7 +631,7 @@ function enemyShoot()
             }
 
         }
-        eBullets.push(new Bullet(a.x + a.w * 0.5, a.y + a.h, 8, 4, 4, "#B22222"));
+        eBullets.push(new Bullet(a.x, a.y + a.h/2, 8, 4, 4, "#B22222"));
     }
     for (var i = 0, len = eBullets.length; i < len; i++)
     {
@@ -602,7 +646,11 @@ function enemyShoot()
             continue;
         }
 
-        if (HitShip(b.x, b.y, b.width, b.height, ship.x - 60, ship.y, ship.sprite.h, ship.sprite.w))// if bullet hits ship
+
+        var xRange = Math.abs(ship.x - eBullets[i].x);
+        var yRange = Math.abs(ship.y +10 - eBullets[i].y);
+
+        if (xRange < 10 && yRange < 10)
         {
             health -= 25;
             eBullets.splice(i, 1);
@@ -612,6 +660,8 @@ function enemyShoot()
     }
 }
 ;
+
+
 
 function checkColision()// if enemy colides with ship
 {
@@ -729,6 +779,12 @@ function revealGame()
     else
     {
         instructionElement = document.getElementById('mobile-instructions');
+        highScoreElement = document.getElementById('mobile-highScore');
+        scoreElement = document.getElementById('mobile-score');
+        healthElement = document.getElementById('mobile-health');
+        gameOverElement = document.getElementById('mobile-gameOver');
+        setMobileStyle();
+        revealBottomChrome();
         revealMobileStartToast();
 
     }
@@ -737,6 +793,44 @@ function revealGame()
 
 }
 ;
+
+window.onresize = function(){ setMobileStyle(); };
+function setMobileStyle()
+{
+    if(MOBILE){
+    getViewportSize();
+
+    
+
+    
+    if(viewportWidth > viewpotHeight)
+    {
+        soundAndMusicElement.style.marginTop = "-8em";  
+        copyrightElement.style.marginTop = "-1.5em"; 
+        mobileWelcomeToast.style.top = null;
+        highScoreElement.style.marginTop = "-47em";
+        scoreElement.style.marginTop = "-47em";
+        healthElement.style.marginTop = "-47em";
+
+        toastElement.style.top = "75%";
+        document.getElementById('warning').style.top = "11%";
+        
+    }
+    else
+    {
+        soundAndMusicElement.style.marginTop = "26em";
+        mobileWelcomeToast.style.top = "48%";
+        copyrightElement.style.marginTop = "-1.5em"; 
+        highScoreElement.style.marginTop = "-2em";
+        scoreElement.style.marginTop = "-2em";
+        healthElement.style.marginTop = "-2em";
+
+        toastElement.style.top = "55%";
+       document.getElementById('warning').style.top = "38%";
+    }
+
+    }
+};
 
 function drawMobileInstructions(){
     var cw = screen.width,
@@ -937,11 +1031,6 @@ mobileStartLink.addEventListener('click', function(e){
 });
 
 
-//var mobileWelcomeToast = document.getElementById('mobile-welcome-toast');
-//var welcomeStartLink = document.getElementById('welcome-start-link');
-//var showHowLink = document.getElementById('show-how-link');
-//var mobileStartToast = document.getElementById('mobile-start-toast');
-//var mobileStartLink = document.getElementById('mobile-start-link');;
 
 welcomeStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
@@ -962,6 +1051,9 @@ showHowLink.addEventListener('click', function(e){
    draw();
 });
 
+playAgainLink.addEventListener('click', function(e){
+location.reload();
+});
 window.addEventListener('blur', function (e)
 {
     windowHasFocus = false;
@@ -978,7 +1070,7 @@ screen.canvas.addEventListener( 'touchstart', touchStart);
 screen.canvas.addEventListener( 'touchend', touchEnd );   
 }
 function touchStart(e) { 
-        var x = e.changedTouches[0].pageX;  
+    var x = e.changedTouches[0].pageX;  
     var y = e.changedTouches[0].pageY; 
     if (gameStarted) {         
         if (x > screen.width/2) 
@@ -1001,10 +1093,14 @@ function touchStart(e) {
 }   };
 
 function touchEnd(e) {      
-
+ var x = e.changedTouches[0].pageX;  
     
-    if (gameStarted) {         
- clearInterval(SCREEN_HELD);
+    if (gameStarted) {
+        if (x < screen.width/2) 
+        {            
+           clearInterval(SCREEN_HELD);          
+        }  
+ 
         // Prevent players from double         
        // tapping to zoom into the canvas         
         e.preventDefault();       
@@ -1014,7 +1110,7 @@ function touchEnd(e) {
 
 function processRightTap()
 {      
- bullets.push(new Bullet(ship.x+10, ship.y + 65, -8, 12, 4, "#FFFF00"));
+ bullets.push(new Bullet(ship.x+ (shSprite.w *.9), ship.y + (shSprite.h/2), -8, 12, 4, "#FFFF00"));
 };
 
 function processBottomLeftTap() {      

@@ -12,9 +12,10 @@ canvas{
     left:0;
     right:0;
     border : 2px solid red;
-    border-radius: 10px;
-    
+    border-radius: 10px;   
 }
+
+
 #mobile-start-link
 {
 
@@ -26,6 +27,17 @@ canvas{
     border: 1px solid black;
     left: -15px;
     top: 13px;
+}
+#play-again-link
+{
+       background: forestgreen;
+    text-decoration: none;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid black;
+    left: -60px;
+    top: -300px;
 }
 .mobile-toast{
    position: absolute;
@@ -41,11 +53,18 @@ canvas{
 }
 #mobile-instructions
 {
-    position: relative;
-    top: -80%;
+
+position: absolute;
+    /* top: -80%; */
     z-index: 1;
-    left: 25%;
+    left: 27%;
     max-width: 50%;
+    margin: auto;
+    text-align: center;
+    margin-top: -20px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 #welcome-start-link{
     position: relative;
@@ -67,6 +86,15 @@ canvas{
     top: 33%;
     
 
+}
+
+#play-again-toast
+{
+     position: relative;
+
+    max-width: 40%;
+    left: 46%;
+    top: 33%;   
 }
 .welcome-link{
    position: absolute;
@@ -93,14 +121,19 @@ canvas{
 
 #fadeBlack
 {
+    
     position: relative;
     background: black;
-    width: 99.8%;
-    left: 0.1%;
-        top: -89.8%;
-    height: 98.2%;
+    width: 800px;
+    height: 400px;
+    left: 1px;
+    top: -422px;
+    /* margin: 10px; */
+    /* height: 98.2%; */
     z-index: 1;
     border-radius: 10px;
+    
+
     opacity: 0;
     display:none;
 }
@@ -114,10 +147,14 @@ canvas{
     z-index: 1;
     text-align: center;
     top: 50%;
-    left: 40%;
+    width:400px;
+    right: 0;
+    left: 0;
+    margin: auto;
             }
             #paused{
                     max-width: 300px;
+                    top: 43%;
             }
             #gameOver{
                     max-width: 300px
@@ -126,12 +163,12 @@ canvas{
                 max-width: 350px;
             }
             #warning{
-                top: -85%;
+
+    top: 29%;
                     max-width: 300px;
              font-family: 'Fredericka the Great'; 
-             display:none;
-             z-index: 1;
 
+             transition: opacity 5s;
             }
 
             #gameDetails
@@ -178,8 +215,8 @@ body{
 
 #toast{
 	position: fixed;
-	margin: auto;
-        left: 33%;
+    left: 50%;
+    transform: translate(-50%, 0);
 	width: 600px;
 	font-size: 18px;
         font-family: 'Press Start 2P', cursive; 
@@ -333,4 +370,49 @@ position: relative;
 
 #sound-checkbox-div{
 	margin-right: 10px;
+}
+
+#mobile-highScore{
+
+    position: absolute;
+    margin-left: 2em;
+    margin-top: -47em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    transition: opacity 5s;
+/*	display: none;
+	opacity: 0;*/
+
+}
+
+#mobile-score{
+    position: absolute;
+    margin-left: 28em;
+    margin-top: -47em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+
+/*	display: none;
+	opacity: 0;*/
+	transition: opacity 5s;
+}
+#mobile-health{
+position: absolute;
+    margin-left: 48em;
+    margin-top: -47em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+        font-size: 12px;
+/*	display: none;
+	opacity: 0;*/
+	transition: opacity 5s;
 }
