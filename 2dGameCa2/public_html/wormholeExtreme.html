@@ -8,134 +8,137 @@ and John Loane SnailBait game adapted from David Geary author of the book Core h
         <title>Wormhole Extreme Game</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=900"/>
-
-         <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
-         <link rel='stylesheet' href='Style.css'/>
-         <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Niconne|Press+Start+2P" rel="stylesheet">
-
-        
-
+        <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
+        <link rel='stylesheet' href='Style.css'/>
+        <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Niconne|Press+Start+2P" rel="stylesheet">
     </head>
-    <body>
-       
-     
-<div id = 'arena'>
-     
-      <div id='mobile-welcome-toast'
-              class='mobile-toast'> <!-- mobile devices only -->
-            <div id='welcome'>
-               Shoot enemies. Avoid being hit.
+    <body>      
 
-               <div id='welcome-instructions'> 
-                  <a href='#' class='welcome-link' 
-                                    id='welcome-start-link'>
-                        Start the game
-                     </a>
-                  
+        <div id = 'arena'>
 
-                  <a href='#' class='welcome-link' 
-                                    id='show-how-link'>
-                        Show how to use the controls
-                     </a>
-                  
-               </div>
+            <div id='mobile-welcome-toast'
+                 class='mobile-toast'> <!-- mobile devices only -->
+                <div id='welcome'>
+                    Shoot enemies. Avoid being hit.
+
+                    <div id='welcome-instructions'> 
+                        <a href='#' class='welcome-link' 
+                           id='welcome-start-link'>
+                            Start the game
+                        </a>
+
+                        <a href='#' class='welcome-link' 
+                           id='show-how-link'>
+                            Show how to use the controls
+                        </a>
+
+                    </div>
+                </div>
             </div>
-         </div>
 
-         <div id='mobile-start-toast'
-              class='mobile-toast'> <!-- mobile devices only -->
-               <a href='#' class='welcome-link' 
-                                 id='mobile-start-link'>Start</a>
-         </div>
-      
-      
-      
-      
-      
-            
-<!-- Fps and Score TOP CHROME -->
-<div id = 'gameDetails'>
-    
-<div id = 'highScore'></div>
-<div id = 'score'></div>
-<div id = 'health'></div>
-<div id = 'fps'></div>
-<div id = 'gameTimeElapsed'></div>
-<div id = 'round'></div>
+            <div id='mobile-start-toast'
+                 class='mobile-toast'> <!-- mobile devices only -->
+                <a href='#' class='welcome-link' 
+                   id='mobile-start-link'>Start</a>
+            </div>
 
-</div>
+            <!-- Fps and Score TOP CHROME -->
+            <div id = 'gameDetails'>
 
-<div id = 'mobile-gameDetails'>
-    
-<div id = 'mobile-highScore'></div>
-<div id = 'mobile-score'></div>
-<div id = 'mobile-health'></div>
+                <div id = 'highScore'></div>
+                <div id = 'score'></div>
+                <div id = 'health'></div>
+                <div id = 'fps'></div>
+                <div id = 'gameTimeElapsed'></div>
+                <div id = 'round'></div>
 
+            </div>
 
-</div>
+            <div id = 'mobile-gameDetails'>
+
+                <div id = 'mobile-highScore'></div>
+                <div id = 'mobile-score'></div>
+                <div id = 'mobile-health'></div>
+
+            </div>
 
 
 
-<div id = 'toast'></div>
+            <div id = 'toast'></div>
 
-<!-- Bottom CHROME -->
-<!-- Sound and Music .................-->
-<div id='sound-and-music'>
-<div id='sound-checkbox-div' class = 'checkbox-div'>
-Sound <input id='sound-checkbox' type='checkbox' checked/>
-</div>
-<div id='music-checkbox-div' class = 'checkbox-div'>
-Music <input id='music-checkbox' type='checkbox' checked/>
-</div>
-</div>
-<!--Instructions for game controls.........-->
-<div id = 'instructions'>
-<div class = 'keys'>
-&uarr;<div class='explanation'>move up</div>
-&darr;<div class='explanation'>move down</div>
-space <div class='explanation'>Shoot</div>
-p <div class='explanation'>pause</div>
-</div>
-</div>
+            <!-- Bottom CHROME -->
+            <!-- Sound and Music .................-->
+            <div id='sound-and-music'>
+                <div id='sound-checkbox-div' class = 'checkbox-div' >
+                    Sound <input id='sound-checkbox' type='checkbox' checked name = 'sound'/>
+                </div>
+                <div id='music-checkbox-div' class = 'checkbox-div'>
+                    Music <input id='music-checkbox' type='checkbox' checked name = 'music'/>
+                </div>
+            </div>
 
+            <!--Instructions for game controls.........-->
+            <div id = 'instructions'>
+                <div class = 'keys'>
+                    &uarr;<div class='explanation'>move up</div>
+                    &darr;<div class='explanation'>move down</div>
+                    space <div class='explanation'>Shoot</div>
+                    p <div class='explanation'>pause</div>
+                </div>
+            </div>
 
- <div id ='fadeBlack'></div>
-<!--Copyright..................-->
-<div id='copyright'>&copy; 2017 Michael Grinnell</div>
+            <div id ='fadeBlack'></div>
+            <!--Copyright..................-->
+            <div id='copyright'>&copy; 2017 Michael Grinnell</div>
 
-<p id="warning">Warning<br>frame rate is low</p>
-<p id="startGame">Press S to Start</p>
-<p id="paused">Game Paused</p>
-<p id="gameOver">Game Over <br> X to play again</p>
-<p id="mobile-gameOver">Game Over</p>
+            <p id="warning">Warning<br>frame rate is low</p>
+            <p id="startGame">Press S to Start</p>
+            <p id="paused">Game Paused</p>
+            <p id="gameOver">Game Over <br> X to play again</p>
+            <p id="mobile-gameOver">Game Over</p>
 
-   
-         <div id='play-again-toast'
-              class='mobile-toast'> <!-- mobile devices only -->
-               <a href='#' class='welcome-link' 
-                                 id='play-again-link'>Play Again</a>
-         </div>
+            <div id='play-again-toast'
+                 class='mobile-toast'> <!-- mobile devices only -->
+                <a href='#' class='welcome-link' 
+                   id='play-again-link'>Play Again</a>
+            </div>
 
-<div id = 'mobile-instructions'>
-   <div class = 'keys'>
-      Up
-      <div class='explanation'>Move Up</div>
-   </div>
-   <div class = 'keys'>
-      Down
-      <div class='explanation'>Move Down</div>
-   </div>
-       <div class = 'keys'>
-      Right
-      <div class='explanation'>Shoot</div>
-   </div>
-</div>
-</div>
-<script src = 'js/stopwatch.js'></script>
-<script src = 'js/Helpers.js'></script>
-<script src = 'js/Game.js'></script>
-
-
+            <div id = 'mobile-instructions'>
+                <div class = 'keys'>
+                    Up
+                    <div class='explanation'>Move Up</div>
+                </div>
+                <div class = 'keys'>
+                    Down
+                    <div class='explanation'>Move Down</div>
+                </div>
+                <div class = 'keys'>
+                    Right
+                    <div class='explanation'>Shoot</div>
+                </div>
+            </div>
+        </div>
+        <script src = 'js/stopwatch.js'></script>
+        <script src = 'js/Helpers.js'></script>
+        <script src = 'js/Game.js'></script>
+        
+<audio id="music">
+  <source id='song' src="Audio/ToManySkittles.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+        <audio id="enemyDown">
+  <source id='soundEnemy' src="Audio/enemyDown.wav" type="audio/wav">
+  Your browser does not support the audio element.
+</audio>
+        <audio id="shoot">
+  <source id='shootSound' src="Audio/laser.wav" type="audio/wav">
+  Your browser does not support the audio element.
+</audio>
+        
+                <audio id="death">
+  <source id='deathSound' src="Audio/death.wav" type="audio/wav">
+  Your browser does not support the audio element.
+</audio>
 
     </body>
 </html>

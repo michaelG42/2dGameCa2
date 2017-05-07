@@ -1,11 +1,13 @@
 
+//ALL of the functions on this page have been taken from Max Wihlborg youtube video on space invaders (https://www.youtube.com/watch?v=IerQ5M9p4YY)
+// only slight modifications to some
 function Screen(width, height)// creates canvas
 {
     this.canvas = document.createElement("canvas");
     this.canvas.width = this.width = width;
     this.canvas.height = this.height = height;
     this.ctx = this.canvas.getContext("2d");
-    
+
     document.body.appendChild(this.canvas);
 
 }
@@ -13,7 +15,7 @@ function Screen(width, height)// creates canvas
 
 Screen.prototype.clear = function ()//clears screen
 {
-    
+
     this.ctx.clearRect(0, 0, this.width, this.height);
 };
 Screen.prototype.drawSprite = function (sp, y, x)//draws a sprite
@@ -87,30 +89,6 @@ function HitShip(ax, ay, aw, ah, bx, by, bw, bh)// checks if bullet hits ship by
 }
 ;
 
-
-//this wouldnt work, not sure why, wanted to use it for collision detection
-//was trying to take the ships x position away from the bullets x 
-//and if the absolute value vas less than  ships width then it was a hit
-//wanted the same for y position
-//function HitShip(shipx, shipy, shipw, shiph, bx, by, bw, bh ) 
-//{
-//    var xRange = Math.abs(bx+bw - shipx+shipw);
-//    var yRange = Math.abs(by+bh - shipy+shiph);
-//    
-//    var hit; 
-//    
-//    if (xRange < 50 && yRange < 50)
-//    {
-//        window.alert("x " + xRange + "y" + yRange);
-//        hit = true;
-//    }
-//    else 
-//    {
-//        hit = false;
-//    }
-//    
-//    return hit;
-//};
 
 function Bullet(x, y, vel, w, h, color)// create bullet
 {

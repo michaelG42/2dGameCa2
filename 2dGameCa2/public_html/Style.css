@@ -1,6 +1,4 @@
-
 canvas{
-
     background-image:  url("Images/Background1.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -14,7 +12,6 @@ canvas{
     border : 2px solid red;
     border-radius: 10px;   
 }
-
 
 #mobile-start-link
 {
@@ -30,7 +27,7 @@ canvas{
 }
 #play-again-link
 {
-       background: forestgreen;
+    background: forestgreen;
     text-decoration: none;
     padding: 5px;
     padding-left: 15px;
@@ -40,21 +37,21 @@ canvas{
     top: -300px;
 }
 .mobile-toast{
-   position: absolute;
-   border-radius: 10px;
-   font: 30px fantasy;
-   text-align: center;
+    position: absolute;
+    border-radius: 10px;
+    font: 30px fantasy;
+    text-align: center;
     text-shadow: 3px 3px 3px rgb(0,0,0);
     color: #8153df;
-   transition: opacity 1s;
-   display: none;
-   z-index: 1;
-   opacity: 0;
+    transition: opacity 1s;
+    display: none;
+    z-index: 1;
+    opacity: 0;
 }
 #mobile-instructions
 {
 
-position: absolute;
+    position: absolute;
     /* top: -80%; */
     z-index: 1;
     left: 27%;
@@ -80,48 +77,42 @@ position: absolute;
 }
 #mobile-start-toast{
     position: relative;
-
     max-width: 40%;
     left: 46%;
     top: 33%;
-    
-
 }
 
 #play-again-toast
 {
-     position: relative;
+    position: relative;
 
     max-width: 40%;
     left: 46%;
     top: 33%;   
 }
 .welcome-link{
-   position: absolute;
-   border-radius: 10px;
-   font: 30px fantasy;
-   text-align: center;
-   text-shadow: 1px 1px 1px rgb(0,0,0);
-   color: #f09c49;
-   transition: opacity 1s;
-   display: none;
-   z-index: 1;
-   opacity: 0;
+    position: absolute;
+    border-radius: 10px;
+    font: 30px fantasy;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgb(0,0,0);
+    color: #f09c49;
+    transition: opacity 1s;
+    display: none;
+    z-index: 1;
+    opacity: 0;
 }
 #mobile-welcome-toast{
-   width: 800px;
-   height: 400px;
+    width: 800px;
+    height: 400px;
 }
 #mobile-start-toast{
-   width: 800px;
-   height: 400px;
-
+    width: 800px;
+    height: 400px;
 }
-
 
 #fadeBlack
 {
-    
     position: relative;
     background: black;
     width: 800px;
@@ -132,12 +123,10 @@ position: absolute;
     /* height: 98.2%; */
     z-index: 1;
     border-radius: 10px;
-    
-
     opacity: 0;
     display:none;
 }
-            p{
+p{
     font-family: 'Press Start 2P', cursive;
     color: red;
     font-size: 20px;
@@ -151,166 +140,160 @@ position: absolute;
     right: 0;
     left: 0;
     margin: auto;
-            }
-            #paused{
-                    max-width: 300px;
-                    top: 43%;
-            }
-            #gameOver{
-                    max-width: 300px
-            }
-            #startGame{
-                max-width: 350px;
-            }
-            #warning{
-
+}
+#paused{
+    max-width: 300px;
+    top: 43%;
+}
+#gameOver{
+    max-width: 300px
+}
+#startGame{
+    max-width: 350px;
+}
+#warning{
     top: 29%;
-                    max-width: 300px;
-             font-family: 'Fredericka the Great'; 
+    max-width: 300px;
+    font-family: 'Fredericka the Great'; 
+    transition: opacity 5s;
+}
 
-             transition: opacity 5s;
-            }
+#gameDetails
+{
 
-            #gameDetails
-            {
-                
-                position: relative;
-                width: 300px;
-                height: 350px;
-                background-color: #1AA3A3;
-                margin-left: -23em;
-                margin-top: 15em;
-                border: 2px solid black;
-                border-radius: 25px;
-            }
+    position: relative;
+    width: 300px;
+    height: 350px;
+    background-color: #1AA3A3;
+    margin-left: -23em;
+    margin-top: 15em;
+    border: 2px solid black;
+    border-radius: 25px;
+}
 #fps{
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 4em;
-	z-index: 1;
-	color: #AEFE57;
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 4em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 
 body{
-	background-color: #0B5E56;
-        
+    background-color: #0B5E56;
+
 }
 
 #arena{
-	margin: 0 auto;
-	margin-top: 50px;
-	width: 802px;
-	height: 520px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 802px;
+    height: 520px;
 }
 
 #game-canvas{
-	border: 1.5px solid blue;
+    border: 1.5px solid blue;
 }
 
 #toast{
-	position: fixed;
+    position: fixed;
     left: 50%;
     transform: translate(-50%, 0);
-	width: 600px;
-	font-size: 18px;
-        font-family: 'Press Start 2P', cursive; 
-	text-align: center;
-	color: #ff6;
-	text-shadow: 2px 2px 4px rgb(0,0,0);
-
-	display: none;
-	opacity: 0;
-	transition: opacity 0.5s;
-	z-index: 1;
+    width: 600px;
+    font-size: 18px;
+    font-family: 'Press Start 2P', cursive; 
+    text-align: center;
+    color: #ff6;
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 1;
 }
 
 #highScore{
-
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 8em;
-	z-index: 1;
-	color: #AEFE57;
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 8em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 
 #score{
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 12em;
-	z-index: 1;
-	color: #AEFE57;
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 12em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 #health{
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 16em;
-	z-index: 1;
-	color: #AEFE57;
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 16em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 #round{
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 20em;
-	z-index: 1;
-	color: #AEFE57;
-
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 20em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 #gameTimeElapsed{
-	position: absolute;
-        margin-left: 2em;
-        margin-top: 24em;
-	z-index: 1;
-	color: #AEFE57;
-	font-family: 'Press Start 2P', cursive; 
-        text-shadow: 2px 2px 4px rgb(0,0,0);
-        font-size: 12px;
-	display: none;
-	opacity: 0;
-	transition: opacity 5s;
+    position: absolute;
+    margin-left: 2em;
+    margin-top: 24em;
+    z-index: 1;
+    color: #AEFE57;
+    font-family: 'Press Start 2P', cursive; 
+    text-shadow: 2px 2px 4px rgb(0,0,0);
+    font-size: 12px;
+    display: none;
+    opacity: 0;
+    transition: opacity 5s;
 }
 
 .keys{
-	color: #86BECB;
-
-	border-radius: 5px;
-	margin-left: 10px;
-	padding-right: 5px;
-	padding-bottom:5px;
-	display: inline;
+    color: #86BECB;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding-right: 5px;
+    padding-bottom:5px;
+    display: inline;
 }
 
 #instructions{
-position: relative;
+    position: relative;
     margin-top: -8em;
     margin-left: 225px;
     padding-left: 5px;
@@ -325,19 +308,18 @@ position: relative;
 }
 
 .explanation{
-	color: #ff0;
-	text-shadow: 1px 1px 1px rgba(0,0,200, 0.5);
-	display: inline;
-	margin-top: 5px;
-	padding-right: 5px;
-	padding-left: 5px;
-	padding-bottom: 2px;
+    color: #ff0;
+    text-shadow: 1px 1px 1px rgba(0,0,200, 0.5);
+    display: inline;
+    margin-top: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 2px;
 }
 
 #copyright{
     float: right;
     left: -2px;
-
     margin-top: 5em;
     padding: 2px;
     color: #86BECB;
@@ -350,7 +332,6 @@ position: relative;
 
 #sound-and-music{
     position: relative;
-
     margin-top: 10em;
     color: #ff0;
     text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
@@ -364,12 +345,12 @@ position: relative;
 }
 
 .checkbox-div{
-	display: inline;
-	text-shadow: 1px 1px 1px blue;
+    display: inline;
+    text-shadow: 1px 1px 1px blue;
 }
 
 #sound-checkbox-div{
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 #mobile-highScore{
@@ -383,8 +364,8 @@ position: relative;
     text-shadow: 2px 2px 4px rgb(0,0,0);
     font-size: 12px;
     transition: opacity 5s;
-/*	display: none;
-	opacity: 0;*/
+    /*	display: none;
+    opacity: 0;*/
 
 }
 
@@ -398,12 +379,12 @@ position: relative;
     text-shadow: 2px 2px 4px rgb(0,0,0);
     font-size: 12px;
 
-/*	display: none;
-	opacity: 0;*/
-	transition: opacity 5s;
+    /*	display: none;
+    opacity: 0;*/
+    transition: opacity 5s;
 }
 #mobile-health{
-position: absolute;
+    position: absolute;
     margin-left: 48em;
     margin-top: -47em;
     z-index: 1;
@@ -411,8 +392,8 @@ position: absolute;
     font-family: 'Press Start 2P', cursive;
     text-shadow: 2px 2px 4px rgb(0,0,0);
     font-size: 12px;
-        font-size: 12px;
-/*	display: none;
-	opacity: 0;*/
-	transition: opacity 5s;
+    font-size: 12px;
+    /*	display: none;
+    opacity: 0;*/
+    transition: opacity 5s;
 }
