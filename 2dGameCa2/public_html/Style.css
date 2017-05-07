@@ -140,6 +140,7 @@ p{
     right: 0;
     left: 0;
     margin: auto;
+    
 }
 #paused{
     max-width: 300px;
@@ -220,7 +221,7 @@ body{
     position: absolute;
     margin-left: 2em;
     margin-top: 8em;
-    z-index: 1;
+    z-index: 0;
     color: #AEFE57;
     font-family: 'Press Start 2P', cursive; 
     text-shadow: 2px 2px 4px rgb(0,0,0);
@@ -234,7 +235,7 @@ body{
     position: absolute;
     margin-left: 2em;
     margin-top: 12em;
-    z-index: 1;
+    z-index: 0;
     color: #AEFE57;
     font-family: 'Press Start 2P', cursive; 
     text-shadow: 2px 2px 4px rgb(0,0,0);
@@ -242,12 +243,13 @@ body{
     display: none;
     opacity: 0;
     transition: opacity 5s;
+
 }
 #health{
     position: absolute;
     margin-left: 2em;
     margin-top: 16em;
-    z-index: 1;
+    z-index: 0;
     color: #AEFE57;
     font-family: 'Press Start 2P', cursive; 
     text-shadow: 2px 2px 4px rgb(0,0,0);

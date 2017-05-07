@@ -51,6 +51,7 @@ var MIN_COLISION_RANGE = 30,
         ENEMY_SHOOT_FREQUENCY_LEVEL = 0.1,
         NUM_ENEMYS = 10,
         NUM_ENEMYS_LEVEL = 5;
+        GRAVITY = 9.81;
 
 //for Fades
 var SHORT_DELAY = 50,
@@ -77,9 +78,9 @@ var SCREEN_FADED = false,
         GAME_END_BACKGROUND = "url(images/Background4.jpg)";
 
 //when next level begins
-var LEVEL_2_ROUND = 1.5,
-        LEVEL_3_ROUND = 10,
-        LEVEL_END = 15,
+        var LEVEL_2_ROUND = 3,
+        LEVEL_3_ROUND = 6,
+        LEVEL_END = 10,
         TIME_BETWEEN_ROUNDS = 40;//seconds
 
 var SCREEN_HELD;//for when screen is held down to move
@@ -143,7 +144,7 @@ function init()
     }
     
 //variables initalize at game start
-    round = 15;
+    round = 1;
     score = 0;
     health = 100;
     time = 20;
@@ -498,7 +499,10 @@ function update()
         for (var i = 0; i < enemys.length; i++)
         {
             var a = enemys[i];
-
+             if (a.name === 6)
+            {
+                enemyFall(i);
+            }
             if (a.name === ENEMY_SMALL)//Different enemys have different move speed
             {
                 a.x -= calcPps(ENEMY_SMALL_MOVE_SPEED);
@@ -621,9 +625,7 @@ function shoot()
                         enemyExplode = document.getElementById("enemyDown");
                         enemyExplode.play();
                     }
-                    enemys.splice(j, 1);
-                    j--;
-                    len2--;
+                    a.name = 6;
                     bullets.splice(i, 1);
                     i--;
                     len--;
@@ -878,9 +880,9 @@ function setMobileStyle()
             soundAndMusicElement.style.marginTop = "26em";
             mobileWelcomeToast.style.top = "48%";
             copyrightElement.style.marginTop = "-1.5em";
-            highScoreElement.style.marginTop = "-2em";
-            scoreElement.style.marginTop = "-2em";
-            healthElement.style.marginTop = "-2em";
+            highScoreElement.style.marginTop = "-14em";
+            scoreElement.style.marginTop = "-14em";
+            healthElement.style.marginTop = "-14em";
             toastElement.style.top = "55%";
             document.getElementById('warning').style.top = "38%";
         }
@@ -1138,14 +1140,16 @@ function touchStart(e) {
         {
             
             processRightTap();// to shoot            
-        } else if (x < screen.width / 2 && y < screen.height / 2)
+        } else if (x < viewportWidth / 2 && y < viewpotHeight / 2)
         {
+
             SCREEN_HELD = setInterval(function () {
                 processTopLeftTap();
             }, 15);//sets interval until touch ends
 
-        } else if (x < screen.width / 2 && y > screen.height / 2)
+        } else if (x < viewportWidth / 2 && y > viewpotHeight / 2)
         {
+
             SCREEN_HELD = setInterval(function () {
                 processBottomLeftTap();
             }, 15);
@@ -1306,6 +1310,16 @@ function endingAnimation()
     ship.x += calcPps(10);    
     ship.y += calcPps(-40);
 //    ship.x = Math.max(Math.min(ship.x, screen.width - ((shSprite.w / 2) + 35)), 0);
+};
+function enemyFall(i)
+{
+ var a = enemys[i];
+ if(a.y >= screen.height)
+    {
+      enemys.splice(i, 1); 
+    }
+ a.x -= calcPps(14);   
+ a.y += calcPps(GRAVITY);
 };
 
 main();
