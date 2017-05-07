@@ -47,6 +47,8 @@ var LEVEL_2_ROUND = 1.5;
 var LEVEL_3_ROUND = 10;
 var TIME_BETWEEN_ROUNDS = 40;//seconds
 
+var SCREEN_HELD;
+
 var MOBILE = false;
 function main()
 {
@@ -123,7 +125,8 @@ function init()
     spFrame = 0;
     exFrame = 0;
     lvFrame = 20;
-
+    
+    screentapped =false;
     paused = true;
     gameOver = false;
     windowHasFocus = true;
@@ -204,13 +207,9 @@ function resizeElement(element, w, h){
 
 
 function startGame()
-{
-    
-   
+{  
     document.getElementById('startGame').style.display = 'none'; //hides start message
-    
-
-    
+        
     paused = false;
     gameStarted = true;
     gameTimer.start();
@@ -496,14 +495,14 @@ function moveShip()
         ship.y -= 4;
 
     }
-    ship.y = Math.max(Math.min(ship.y, screen.height - (10 + shSprite.h)), 10);
+    ship.y = Math.max(Math.min(ship.y, screen.height - ((shSprite.h/2)+35)), -50);
 }
 ;
 
 function shoot()
 {
     
-    if (input.isPressed(32))
+    if (input.isPressed(32) )
     {
         
         bullets.push(new Bullet(ship.x+10, ship.y + 65, -8, 12, 4, "#FFFF00"));
@@ -928,12 +927,21 @@ function revealMobileStartToast(){
 
 mobileStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
-   fadeOutElements(mobileStartToast, FADE_DURATION);
+
+
+   fadeOutElements(mobileStartLink, FADE_DURATION);
    mobileInstructionsVisble = false;
+   screen.clear();
 //   playSound(coinSound);
-   gameStarted = true;
+   startGame();
 });
 
+
+//var mobileWelcomeToast = document.getElementById('mobile-welcome-toast');
+//var welcomeStartLink = document.getElementById('welcome-start-link');
+//var showHowLink = document.getElementById('show-how-link');
+//var mobileStartToast = document.getElementById('mobile-start-toast');
+//var mobileStartLink = document.getElementById('mobile-start-link');;
 
 welcomeStartLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
@@ -941,16 +949,17 @@ welcomeStartLink.addEventListener('click', function(e){
 
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
 
-   gameStarted = true;
+   startGame();
 });
 
 showHowLink.addEventListener('click', function(e){
    var FADE_DURATION = 1000;
    fadeOutElements(mobileWelcomeToast, FADE_DURATION);
-   drawMobileInstructions();
+   
    fadeInElements(mobileStartToast);
    fadeInElements(mobileStartLink);
    mobileInstructionsVisible = true;
+   draw();
 });
 
 window.addEventListener('blur', function (e)
@@ -968,41 +977,57 @@ function addTouchEventHandlers()
 screen.canvas.addEventListener( 'touchstart', touchStart);      
 screen.canvas.addEventListener( 'touchend', touchEnd );   
 }
-function touchStart(e) {      
-if (gameStarted) {         
-// Prevent players from inadvertently          
-// dragging the game canvas         
-e.preventDefault();       
-}};
+function touchStart(e) { 
+        var x = e.changedTouches[0].pageX;  
+    var y = e.changedTouches[0].pageY; 
+    if (gameStarted) {         
+        if (x > screen.width/2) 
+        {            
+           processRightTap();            
+        }         
+        else if (x < screen.width/2 && y < screen.height/2) 
+        { 
+           SCREEN_HELD = setInterval(function(){ processTopLeftTap(); }, 15);
+                  
+        }
+        else if (x < screen.width/2 && y > screen.height/2) 
+        { 
+            SCREEN_HELD = setInterval(function(){ processBottomLeftTap();  },15);
+                  
+        }  
+        // Prevent players from double         
+       // tapping to zoom into the canvas         
+        e.preventDefault();       
+}   };
 
 function touchEnd(e) {      
-    var x = e.changedTouches[0].pageX;      
+
+    
     if (gameStarted) {         
-        if (x < screen.width/2) 
-        {            
-            processLeftTap();         
-        }         
-         else if (x > screen.width/2) 
-         {                      	
-            processRightTap();         
-         }         
+ clearInterval(SCREEN_HELD);
         // Prevent players from double         
        // tapping to zoom into the canvas         
         e.preventDefault();       
 }   
 };
+ 
 
 function processRightTap()
 {      
-alert("right");
+ bullets.push(new Bullet(ship.x+10, ship.y + 65, -8, 12, 4, "#FFFF00"));
 };
 
-function processLeftTap() {      
+function processBottomLeftTap() {      
 
-alert("Left");
+ ship.y += 4;
+ship.y = Math.max(Math.min(ship.y, screen.height - ((shSprite.h/2)+35)), -50);
 }
 
+function processTopLeftTap() {      
 
+ship.y -= 4;
+ship.y = Math.max(Math.min(ship.y, screen.height - ((shSprite.h/2)+35)), -50);
+}
 
 window.addEventListener('focus', function (e)
 {
