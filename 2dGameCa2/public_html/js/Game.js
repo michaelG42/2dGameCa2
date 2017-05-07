@@ -73,11 +73,13 @@ var ENEMY_SMALL = 1,
 var SCREEN_FADED = false,
         ROUND_1_BACKGROUND = "url(images/Background1.jpg)",
         ROUND_2_BACKGROUND = "url(images/Background2.jpg)",
-        ROUND_3_BACKGROUND = "url(images/Background3.jpg)";
+        ROUND_3_BACKGROUND = "url(images/Background3.jpg)",
+        GAME_END_BACKGROUND = "url(images/Background4.jpg)";
 
 //when next level begins
 var LEVEL_2_ROUND = 1.5,
         LEVEL_3_ROUND = 10,
+        LEVEL_END = 15,
         TIME_BETWEEN_ROUNDS = 40;//seconds
 
 var SCREEN_HELD;//for when screen is held down to move
@@ -141,7 +143,7 @@ function init()
     }
     
 //variables initalize at game start
-    round = 1;
+    round = 15;
     score = 0;
     health = 100;
     time = 20;
@@ -152,6 +154,7 @@ function init()
     exFrame = 0;
     lvFrame = 20;
 
+    gameWon = false;
     screentapped = false;
     paused = true;
     gameOver = false;
@@ -311,8 +314,7 @@ function checkEnemyPos()
         }
 
     }
-}
-;
+};
 function checkRaiseDifficulty()
 {
 
@@ -343,7 +345,22 @@ function checkRaiseDifficulty()
         setTimeout(function () {
             fadeIn();
         }, 8000);
-    } else
+    } 
+     else if(round >= LEVEL_END)
+     {
+         gameWon = true;
+        
+        setTimeout(function () {
+            fadeIn();
+        }, 4000);
+        
+        
+     }
+     else if(round === LEVEL_END - 0.5)
+     {
+        removeEnemysOffCanvas();
+     }
+        else
     {
         raiseDifficulty();
     }
@@ -459,6 +476,14 @@ function update()
 
         }
 
+        if(gameWon)
+        {
+            endingAnimation();
+        }
+        else
+        {
+            
+        
         gameTimeElapsed = gameTimer.getElapsedTime();
         moveShip();
         shoot();
@@ -491,8 +516,10 @@ function update()
         {
             shipExplode();
         }
+        }
     }
 }
+
 ;
 
 
@@ -566,7 +593,6 @@ function shoot()
         shootSound = document.getElementById("shoot");
         shootSound.play();
         }
-
         bullets.push(new Bullet(ship.x + (shSprite.w * .9), ship.y + (shSprite.h / 2), -8, 12, 4, "#FFFF00"));
     }
     for (var i = 0, len = bullets.length; i < len; i++)
@@ -1245,11 +1271,41 @@ function changeBackground()//changes the background image
     if (round > LEVEL_2_ROUND && round < LEVEL_3_ROUND)//middle level
     {
         screen.canvas.style.backgroundImage = ROUND_3_BACKGROUND;
-    } else
+    }
+    else if(round >= LEVEL_END)
+    {
+        victoryScreen();
+    }
+    else
+
     {
         screen.canvas.style.backgroundImage = ROUND_3_BACKGROUND; // this can only be 3rd level
     }
 
-}
+};
+function victoryScreen()
+{
+
+
+        if(MOBILE)
+        {
+            gameOverElement = document.getElementById("mobile-gameWon");
+        }
+        else
+        {
+            gameOverElement = document.getElementById("gameWon");
+        }
+        
+        
+        gameLost();
+        screen.canvas.style.backgroundImage = GAME_END_BACKGROUND;
+    
+};
+function endingAnimation()
+{
+    ship.x += calcPps(10);    
+    ship.y += calcPps(-40);
+//    ship.x = Math.max(Math.min(ship.x, screen.width - ((shSprite.w / 2) + 35)), 0);
+};
 
 main();
